@@ -1,0 +1,1 @@
+type TypeServices= 'users' | 'campaigns';
