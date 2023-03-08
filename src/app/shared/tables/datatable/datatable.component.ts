@@ -78,7 +78,7 @@ export class DatatableComponent implements OnInit {
 
   loadConfigFooterDatatable(): void {
     $( ".dataTables_filter label" ).addClass( "d-inline-flex align-items-center" );
-    $( "input" ).addClass( "form-control" );
+    $( ".dataTables_filter input" ).addClass( "form-control" );
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
