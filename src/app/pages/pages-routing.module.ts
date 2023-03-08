@@ -8,8 +8,8 @@ const routes: Routes = [
     path: "",
     component: DefaultComponent
   },
-  { path: 'dashboard', component: DefaultComponent },
   { path: 'dashboards', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule) },
+  { path: 'administrator', loadChildren: () => import('./administrator/administrator.module').then(m => m.AdministratorModule) },
 ];
 
 @NgModule({
