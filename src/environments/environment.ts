@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   defaultauth: 'fackbackend',
-  urlBackend: 'http://base-service.test',
   firebaseConfig: {
     apiKey: '',
     authDomain: '',
@@ -16,8 +15,8 @@ export const environment = {
     appId: '',
     measurementId: ''
   },
+  urlBackend: 'http://service-prodooh.test',
   sessionCookieStorageKey: 'cookie-session-data',
-  url_backend: 'http://base-service.test',
   serverConfig: {
     client_id: 2,
     client_secret: '10XwHjzlOKJpDEmodZEjOjAB2MyNvZ7zFxyzz2bY',

@@ -19,7 +19,7 @@ export class AuthService {
 
   login( userAuth: Auth ) {
     userAuth = Object.assign( environment.serverConfig, userAuth );
-    return this.http.post( `${ environment.url_backend }/auth/token`, userAuth )
+    return this.http.post( `${ environment.urlBackend }/auth/token`, userAuth )
       .pipe(
         map ( resp => {
           this.cookieService.set(`${ environment.sessionCookieStorageKey }`, ( JSON.stringify( resp )), 5);

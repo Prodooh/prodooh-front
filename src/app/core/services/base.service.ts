@@ -25,7 +25,7 @@ export class BaseService {
     const headers = new HttpHeaders({
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`
     });
-    const URL = `${ environment.url_backend }/${ query }`;
+    const URL = `${ environment.urlBackend }/${ query }`;
     return this.http.get( URL, { headers } );
   }
 
@@ -34,7 +34,7 @@ export class BaseService {
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`,
       responseType: 'arraybuffer'
     });
-    const URL = `${ environment.url_backend }/${ query }`;
+    const URL = `${ environment.urlBackend }/${ query }`;
     return this.http.get( URL, { headers } );
   }
 
@@ -42,21 +42,21 @@ export class BaseService {
     const headers = new HttpHeaders({
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`
     });
-    return this.http.post( `${ environment.url_backend }/${ query }`, data, { headers } );
+    return this.http.post( `${ environment.urlBackend }/${ query }`, data, { headers } );
   }
 
   putQuery( query: string, data: any ) {
     const headers = new HttpHeaders({
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`
     });
-    return this.http.put( `${ environment.url_backend }/${ query }`, data, { headers } );
+    return this.http.put( `${ environment.urlBackend }/${ query }`, data, { headers } );
   }
 
   deleteQuery( query: string ) {
     const headers = new HttpHeaders({
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`
     });
-    return this.http.delete( `${ environment.url_backend }/${ query }`, { headers } );
+    return this.http.delete( `${ environment.urlBackend }/${ query }`, { headers } );
   }
 
 }
