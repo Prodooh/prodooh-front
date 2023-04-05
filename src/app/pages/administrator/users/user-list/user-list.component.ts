@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class UserListComponent {
 
+  columns: string[] = [
+    'name', 'role', 'email'
+  ];
+
 }
