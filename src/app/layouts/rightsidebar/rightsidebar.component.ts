@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../core/services/event.service';
 import { LAYOUT_WIDTH, SIDEBAR_TYPE, TOPBAR, LAYOUT_MODE } from '../layouts.model';
 import { PreferenceService } from 'src/app/core/services/preference.service';
+import { CookieService } from 'ngx-cookie-service';
+import { environment } from 'src/environments/environment';
+import { payloadPereferences } from 'src/app/core/interfaces/payload-preferences';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Component({
   selector: 'app-rightsidebar',
@@ -21,16 +25,27 @@ export class RightsidebarComponent implements OnInit {
   sidebartype: string;
   mode: string;
   topbar: string;
+  user: any;
+  payload: payloadPereferences;
 
   constructor(private eventService: EventService,
-    private PreferencesService: PreferenceService) { }
+    private PreferencesService: PreferenceService,
+    private cookieService: CookieService,
+    private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
-    this.width = LAYOUT_WIDTH;
-    this.sidebartype = SIDEBAR_TYPE;
-    this.topbar = TOPBAR;
-    this.mode = LAYOUT_MODE;
-
+    this.payload = this.localStorageService.get('payload');
+    console.log(this.payload);
+    
+    this.width = this.payload.changeWidth ?? LAYOUT_WIDTH;
+    this.sidebartype = this.payload.changeSidebartype ?? SIDEBAR_TYPE;
+    this.topbar = this.payload.changeTopbar ?? TOPBAR;
+    this.mode = this.payload.changeMode ?? LAYOUT_MODE;
+    this.user = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
+  
+    Object.entries(this.payload).forEach(([key, value]) => {
+      this.eventService.broadcast(key, value);
+    });
     /**
      * horizontal-vertical layput set
      */
@@ -55,41 +70,57 @@ export class RightsidebarComponent implements OnInit {
    * Change Topbar
    */
   changeTopbar(topbar: string) {
+    console.log("topbar");
+    
     this.topbar = topbar;
     this.eventService.broadcast('changeTopbar', topbar);
-    this.PreferencesService.savePreferences('topbar',topbar);
-    }
+    this.PreferencesService.savePreferences('changeTopbar', topbar, this.user.id);
+    this.localStorageService.setValue('payload', 'changeTopbar', topbar);
+  }
 
   /**
    * Change the layout onclick
    * @param layout Change the layout
    */
   changeLayout(layout) {
+    console.log("layout");
+    
     if (layout.target.checked == true) {
       this.eventService.broadcast('changeLayout', 'vertical');
-      this.PreferencesService.savePreferences('layout','vertical');
+      this.PreferencesService.savePreferences('changeLayout', 'vertical', this.user.id);
+      this.localStorageService.setValue('payload', 'changeLayout', 'vertical');
     }
     else {
       this.eventService.broadcast('changeLayout', 'horizontal');
-      this.PreferencesService.savePreferences('layout','horizontal');
+      this.PreferencesService.savePreferences('changeLayout', 'horizontal', this.user.id);
+      this.localStorageService.setValue('payload', 'changeLayout', 'horizontal');
     }
   }
 
   changeWidth(width: string) {
+    console.log("changeWidth");
+    
     this.width = width;
     this.eventService.broadcast('changeWidth', width);
-    this.PreferencesService.savePreferences('width',width);
+    this.PreferencesService.savePreferences('changeWidth', width, this.user.id);
+    this.localStorageService.setValue('payload', 'changeWidth', width);
   }
 
   changeSidebartype(sidebar: string) {
+    console.log("side");
+    
     this.sidebartype = sidebar;
     this.eventService.broadcast('changeSidebartype', sidebar);
-    this.PreferencesService.savePreferences('sidebar',sidebar);
+    this.PreferencesService.savePreferences('changeSidebartype', sidebar, this.user.id);
+    this.localStorageService.setValue('payload', 'changeSidebartype', sidebar);
   }
 
   changeMode(themeMode: string) {
+    console.log("mode");
+    
     this.mode = themeMode;
     this.eventService.broadcast('changeMode', themeMode);
-    this.PreferencesService.savePreferences('themeMode',themeMode);
+    this.PreferencesService.savePreferences('changeMode', themeMode, this.user.id);
+    this.localStorageService.set('payload',{...this.payload,changeMode: themeMode});
   }
 }
