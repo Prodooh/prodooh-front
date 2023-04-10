@@ -71,7 +71,7 @@ export class RightsidebarComponent implements OnInit {
     this.topbar = topbar;
     this.eventService.broadcast('changeTopbar', topbar);
     this.PreferencesService.savePreferences('changeTopbar', topbar);
-    this.localStorageService.setValue('payload', 'changeTopbar', topbar);
+    this.localStorageService.set('payload',{...this.payload,changeTopbar: topbar});
   }
 
   /**
@@ -82,12 +82,12 @@ export class RightsidebarComponent implements OnInit {
     if (layout.target.checked == true) {
       this.eventService.broadcast('changeLayout', 'vertical');
       this.PreferencesService.savePreferences('changeLayout', 'vertical');
-      this.localStorageService.setValue('payload', 'changeLayout', 'vertical');
+      this.localStorageService.set('payload',{...this.payload,changeLayout: 'vertical'});
     }
     else {
       this.eventService.broadcast('changeLayout', 'horizontal');
       this.PreferencesService.savePreferences('changeLayout', 'horizontal');
-      this.localStorageService.setValue('payload', 'changeLayout', 'horizontal');
+      this.localStorageService.set('payload',{...this.payload,changeLayout: 'horizontal'});
     }
   }
 
@@ -95,14 +95,14 @@ export class RightsidebarComponent implements OnInit {
     this.width = width;
     this.eventService.broadcast('changeWidth', width);
     this.PreferencesService.savePreferences('changeWidth', width);
-    this.localStorageService.setValue('payload', 'changeWidth', width);
+    this.localStorageService.set('payload',{...this.payload,changeWidth: width});
   }
 
   changeSidebartype(sidebar: string) {
     this.sidebartype = sidebar;
     this.eventService.broadcast('changeSidebartype', sidebar);
     this.PreferencesService.savePreferences('changeSidebartype', sidebar);
-    this.localStorageService.setValue('payload', 'changeSidebartype', sidebar);
+    this.localStorageService.set('payload',{...this.payload,changeSidebartype: sidebar});
   }
 
   changeMode(themeMode: string) {
