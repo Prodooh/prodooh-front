@@ -70,7 +70,7 @@ export class TopbarComponent implements OnInit {
     this.languageService.setLanguage(lang);
     let user = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
     console.log(user);
-    this.preferenceService.savePreferences('lang',lang, user.id);
+    this.preferenceService.savePreferences('lang',lang);
   }
 
   /**

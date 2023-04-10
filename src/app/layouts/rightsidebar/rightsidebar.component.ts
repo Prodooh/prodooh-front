@@ -70,7 +70,7 @@ export class RightsidebarComponent implements OnInit {
   changeTopbar(topbar: string) {
     this.topbar = topbar;
     this.eventService.broadcast('changeTopbar', topbar);
-    this.PreferencesService.savePreferences('changeTopbar', topbar, this.user.id);
+    this.PreferencesService.savePreferences('changeTopbar', topbar);
     this.localStorageService.setValue('payload', 'changeTopbar', topbar);
   }
 
@@ -81,12 +81,12 @@ export class RightsidebarComponent implements OnInit {
   changeLayout(layout) {
     if (layout.target.checked == true) {
       this.eventService.broadcast('changeLayout', 'vertical');
-      this.PreferencesService.savePreferences('changeLayout', 'vertical', this.user.id);
+      this.PreferencesService.savePreferences('changeLayout', 'vertical');
       this.localStorageService.setValue('payload', 'changeLayout', 'vertical');
     }
     else {
       this.eventService.broadcast('changeLayout', 'horizontal');
-      this.PreferencesService.savePreferences('changeLayout', 'horizontal', this.user.id);
+      this.PreferencesService.savePreferences('changeLayout', 'horizontal');
       this.localStorageService.setValue('payload', 'changeLayout', 'horizontal');
     }
   }
@@ -94,21 +94,21 @@ export class RightsidebarComponent implements OnInit {
   changeWidth(width: string) {
     this.width = width;
     this.eventService.broadcast('changeWidth', width);
-    this.PreferencesService.savePreferences('changeWidth', width, this.user.id);
+    this.PreferencesService.savePreferences('changeWidth', width);
     this.localStorageService.setValue('payload', 'changeWidth', width);
   }
 
   changeSidebartype(sidebar: string) {
     this.sidebartype = sidebar;
     this.eventService.broadcast('changeSidebartype', sidebar);
-    this.PreferencesService.savePreferences('changeSidebartype', sidebar, this.user.id);
+    this.PreferencesService.savePreferences('changeSidebartype', sidebar);
     this.localStorageService.setValue('payload', 'changeSidebartype', sidebar);
   }
 
   changeMode(themeMode: string) {
     this.mode = themeMode;
     this.eventService.broadcast('changeMode', themeMode);
-    this.PreferencesService.savePreferences('changeMode', themeMode, this.user.id);
+    this.PreferencesService.savePreferences('changeMode', themeMode);
     this.localStorageService.set('payload',{...this.payload,changeMode: themeMode});
   }
 }

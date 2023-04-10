@@ -12,9 +12,9 @@ export class PreferenceService {
     private http: HttpClient
   ) { }
 
-  savePreferences(type: string, value: string | boolean, userId) {
+  savePreferences(type: string, value: string | boolean) {
     let obj = {};
     obj[type] = value; 
-    return this.http.post<any>(`${environment.urlBackend}/users/preference/${userId}`, obj).subscribe();
+    return this.http.post<any>(`${environment.urlBackend}/users/preferences`, obj).subscribe();
   }
 }
