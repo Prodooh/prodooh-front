@@ -1,7 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DatatableService } from '../../../core/services/datatable.service';
 import { DataTableDirective } from 'angular-datatables';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.css']
 })
-export class DatatableComponent implements OnInit {
+export class DatatableComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   datatableElement!: DataTableDirective;
 
@@ -18,6 +19,7 @@ export class DatatableComponent implements OnInit {
 
   dtOptions = undefined;
   data: any;
+  private subscriptions = new Subscription();
 
   constructor(
     private dataService: DatatableService,
@@ -30,6 +32,10 @@ export class DatatableComponent implements OnInit {
     setTimeout(() => this.loadConfigFooterDatatable(), 700); 
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
   loadOptionsDatatable(): void {
     this.dtOptions = {
       pagingType: 'numbers',
@@ -39,7 +45,7 @@ export class DatatableComponent implements OnInit {
       language: this.translate.instant('DATATABLES'),
       ajax: (dataTablesParameters: any, callback: any) => {
         
-        this.dataService.getData(dataTablesParameters, this.serviceType).subscribe((resp: any) => {
+        this.subscriptions.add(this.dataService.getData(dataTablesParameters, this.serviceType).subscribe((resp: any) => {
           this.data = resp.data
           callback({
             recordsTotal: resp.recordsTotal,
@@ -53,7 +59,7 @@ export class DatatableComponent implements OnInit {
           if (resp.data.length != 0) {
             document.querySelector(".odd")?.remove();
           }
-        })
+        }));
         
       },
       columns: this.columns.map(

@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { TOPBAR } from "../layouts.model";
 import { EventService } from '../../core/services/event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-horizontal',
@@ -11,9 +12,10 @@ import { EventService } from '../../core/services/event.service';
 /**
  * Horizontal-layout component
  */
-export class HorizontalComponent implements OnInit, AfterViewInit {
+export class HorizontalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   topbar: string;
+  private subscriptions = new Subscription();
 
   constructor(private eventService: EventService) { }
 
@@ -21,10 +23,10 @@ export class HorizontalComponent implements OnInit, AfterViewInit {
 
     this.topbar = TOPBAR;
 
-    this.eventService.subscribe('changeTopbar', (topbar) => {
+    this.subscriptions.add(this.eventService.subscribe('changeTopbar', (topbar) => {
       this.topbar = topbar;
       this.changeTopbar(this.topbar);
-    });
+    }));
 
     document.body.setAttribute('data-layout', 'horizontal');
     document.body.removeAttribute('data-sidebar');
@@ -33,6 +35,10 @@ export class HorizontalComponent implements OnInit, AfterViewInit {
     document.body.removeAttribute('data-sidebar-small');    
 
     this.changeTopbar(this.topbar);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   ngAfterViewInit() {
