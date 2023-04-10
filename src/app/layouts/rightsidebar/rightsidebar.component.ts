@@ -35,8 +35,6 @@ export class RightsidebarComponent implements OnInit {
 
   ngOnInit() {
     this.payload = this.localStorageService.get('payload');
-    console.log(this.payload);
-    
     this.width = this.payload.changeWidth ?? LAYOUT_WIDTH;
     this.sidebartype = this.payload.changeSidebartype ?? SIDEBAR_TYPE;
     this.topbar = this.payload.changeTopbar ?? TOPBAR;
@@ -70,8 +68,6 @@ export class RightsidebarComponent implements OnInit {
    * Change Topbar
    */
   changeTopbar(topbar: string) {
-    console.log("topbar");
-    
     this.topbar = topbar;
     this.eventService.broadcast('changeTopbar', topbar);
     this.PreferencesService.savePreferences('changeTopbar', topbar, this.user.id);
@@ -83,8 +79,6 @@ export class RightsidebarComponent implements OnInit {
    * @param layout Change the layout
    */
   changeLayout(layout) {
-    console.log("layout");
-    
     if (layout.target.checked == true) {
       this.eventService.broadcast('changeLayout', 'vertical');
       this.PreferencesService.savePreferences('changeLayout', 'vertical', this.user.id);
@@ -98,8 +92,6 @@ export class RightsidebarComponent implements OnInit {
   }
 
   changeWidth(width: string) {
-    console.log("changeWidth");
-    
     this.width = width;
     this.eventService.broadcast('changeWidth', width);
     this.PreferencesService.savePreferences('changeWidth', width, this.user.id);
@@ -107,8 +99,6 @@ export class RightsidebarComponent implements OnInit {
   }
 
   changeSidebartype(sidebar: string) {
-    console.log("side");
-    
     this.sidebartype = sidebar;
     this.eventService.broadcast('changeSidebartype', sidebar);
     this.PreferencesService.savePreferences('changeSidebartype', sidebar, this.user.id);
@@ -116,8 +106,6 @@ export class RightsidebarComponent implements OnInit {
   }
 
   changeMode(themeMode: string) {
-    console.log("mode");
-    
     this.mode = themeMode;
     this.eventService.broadcast('changeMode', themeMode);
     this.PreferencesService.savePreferences('changeMode', themeMode, this.user.id);
