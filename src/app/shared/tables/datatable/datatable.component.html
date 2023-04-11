@@ -5,13 +5,13 @@
         class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
         <thead>
           <tr>
-            <th class="text-center" *ngFor="let column of columns">{{column}}</th>
+            <th class="text-center" *ngFor="let column of columns">{{ ('TABLES.'+serviceType+'.'+ column).toUpperCase() | translate}}</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of data">
             <td class="text-center" *ngFor="let column of columns">
-              {{column == 'id' ? item[column] : item[column] | titlecase }}
+              {{column == 'id' ? item[column] : item[column] | translate | titlecase }}
             </td>
           </tr>
         </tbody>

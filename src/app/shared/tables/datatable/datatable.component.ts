@@ -42,6 +42,8 @@ export class DatatableComponent implements OnInit, OnDestroy {
       pageLength: 10,
       serverSide: true,
       processing: true,
+      stateSave: true,
+      stateDuration: 600,
       language: this.translate.instant('DATATABLES'),
       ajax: (dataTablesParameters: any, callback: any) => {
         
@@ -51,7 +53,7 @@ export class DatatableComponent implements OnInit, OnDestroy {
             recordsTotal: resp.recordsTotal,
             recordsFiltered: resp.recordsFiltered,
             data: resp.data.map((item: any) => ({
-              ...item, 'botones': null
+              ...item, 'buttons': null
             }))
           })
           $("tr.odd")?.hide();
@@ -74,6 +76,7 @@ export class DatatableComponent implements OnInit, OnDestroy {
         {
           extend: 'excel',
           className: 'btn btn-outline-primary',
+          title: `Export_${this.serviceType}_${Date.now()}`,
           exportOptions: {
             columns: Array.from(Array(this.columns.length).keys())
           }

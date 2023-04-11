@@ -367,5 +367,15 @@
         "sSortAscending":  ": activate to sort column ascending",
         "sSortDescending": ": activate to sort column descending"
     }
+  },
+  "TABLES":{
+    "USERS":{
+      "ID": "ID",
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "BUTTONS": "Buttons",
+      "SURNAMES": "Surnames",
+      "ROLE": "Role"
+    }
   }
 }

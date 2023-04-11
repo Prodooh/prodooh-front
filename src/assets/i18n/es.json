@@ -368,5 +368,15 @@
       "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
       "sSortDescending": ": Activar para ordenar la columna de manera descendente"
     }
+  },
+  "TABLES":{
+    "USERS":{
+      "ID": "ID",
+      "NAME": "Nombre",
+      "EMAIL": "Correo electrónico",
+      "BUTTONS": "Botones",
+      "SURNAMES": "Apellidos",
+      "ROLE": "Rol"
+    }
   }
 }
