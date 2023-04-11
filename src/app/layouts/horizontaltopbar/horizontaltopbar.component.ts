@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
@@ -8,6 +8,8 @@ import { DOCUMENT } from '@angular/common';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { AuthService } from '../../core/services/auth.service';
+import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-horizontaltopbar',
@@ -18,7 +20,7 @@ import { AuthService } from '../../core/services/auth.service';
 /**
  * Horizontal Topbar and navbar specified
  */
-export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
+export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   element;
   cookieValue;
@@ -36,12 +38,14 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
     { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
   ];
 
+  private subscriptions = new Subscription();
+
   // tslint:disable-next-line: max-line-length
   constructor(
     @Inject(DOCUMENT) private document: any,
     private router: Router,
     public languageService: LanguageService,
-    public cookiesService: CookieService,
+    public cookieService: CookieService,
     public authService: AuthService
   ) {
     router.events.subscribe(event => {
@@ -56,7 +60,7 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
 
     this.initialize();
 
-    this.cookieValue = this.cookiesService.get('lang');
+    this.cookieValue = this.cookieService.get('lang');
     const val = this.listLang.filter(x => x.lang === this.cookieValue);
     this.countryName = val.map(element => element.text);
     if (val.length === 0) {
@@ -64,6 +68,10 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   setLanguage(text: string, lang: string, flag: string) {
@@ -77,8 +85,12 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
    * Logout the user
    */
   logout() {
-    this.authService.logout();
-    this.router.navigate(['/account/login']);
+    this.subscriptions.add(
+      this.authService.logout().subscribe(() => {        
+        this.cookieService.delete( environment.sessionCookieStorageKey );
+        this.router.navigate(['/account/login']);
+      })
+    );
   }
 
   /**

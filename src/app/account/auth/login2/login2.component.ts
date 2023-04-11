@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { CookieService } from 'ngx-cookie-service';
+import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login2',
@@ -11,7 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./login2.component.scss']
 })
 
-export class Login2Component implements OnInit {
+export class Login2Component implements OnInit, OnDestroy {
+
+  private subscriptions = new Subscription();
 
   fieldTextType: boolean;
 
@@ -19,7 +24,8 @@ export class Login2Component implements OnInit {
     private authService: AuthService,
     private formBuilder: UntypedFormBuilder,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private cookieService: CookieService
   ) { }
 
   loginForm: UntypedFormGroup;
@@ -33,6 +39,10 @@ export class Login2Component implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   carouselOption: OwlOptions = {
@@ -55,15 +65,20 @@ export class Login2Component implements OnInit {
 
     if (this.loginForm.invalid) return;
 
-    this.authService.login({
-      username: this.f.email.value,
-      password: this.f.password.value
-    }).subscribe({
-      next: () => this.router.navigate(['/dashboard']),
-      error: ({error}) => {
-        this.error = error.error == 'failed_authentication' ? this.translate.instant('ERRORS.AUTH.failed_authentication') : 'Error'
-      }
-    });
+    this.subscriptions.add(
+      this.authService.login({
+        username: this.f.email.value,
+        password: this.f.password.value
+      }).subscribe({
+        next: (resp) => {
+          this.cookieService.set(`${ environment.sessionCookieStorageKey }`, ( JSON.stringify( resp )), 5);
+          this.router.navigate(['/'])
+        },
+        error: (error) => {
+          this.error = error.error == 'failed_authentication' ? this.translate.instant('ERRORS.AUTH.failed_authentication') : 'Error'
+        }
+      })
+    );
   }
 
   toggleFieldTextType() {

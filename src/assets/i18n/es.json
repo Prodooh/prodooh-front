@@ -339,11 +339,22 @@
   },
   "ERRORS": {
     "AUTH": {
-      "failed_authentication": "Las credenciales de usuario son incorrectas."
+      "failed_authentication": "Las credenciales del usuario son incorrectas."
+    },
+    "GENERAL": {
+      "TEXT_1": "Error inesperado",
+      "TEXT_2": "Consultar con un administrador"
     }
   },
   "GENERAL": {
-    "SEARCH": "Buscar"
+    "SEARCH": "Buscar",
+    "EMAIL": "Correo electrónico",
+    "PASSWORD": "Contraseña",
+    "UPDATE": "Actualizar",
+    "MESSAGES": {
+      "TEXT_SUCCESS_1": "Listo!",
+      "TEXT_SUCCESS_2": "Todos los cambios se realizaron con éxito."
+    }
   },
   "DATATABLES": {
     "sProcessing": "Procesando...",
@@ -368,5 +379,24 @@
       "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
       "sSortDescending": ": Activar para ordenar la columna de manera descendente"
     }
+  },
+  "AUTH": {
+    "LOGIN": {
+      "WELCOME": "Bienvenid@ de nuevo!",
+      "TEXT_1": "Inicia sesión para continuar",
+      "FORGOT_PASSWORD": "Has olvidado tu contraseña?",
+      "LOGIN": "Iniciar sesión",
+      "RIGHTS": "Todos los derechos reservados."
+    },
+    "UPDATE_PASSWORD": {
+      "UPDATE_PASSWORD": "Actualiza tu contraseña",
+      "TEXT_1": "Necesitas actualizar tu contraseña para continuar.",
+      "PASSWORD_CONFIRMATION": "Confirmación de contraseña"
+    }
+  },
+  "FORM_VALIDATIONS": {
+    "FIELD_REQUIRED": "El campo: {{ field }} es requerido.",
+    "PASSWORDS_NOT_MATCH": "Las contraseñas no coinciden.",
+    "EMAIL_MUST_BE_VALID": "El correo electrónico debe ser una dirección de correo electrónico válida."
   }
 }

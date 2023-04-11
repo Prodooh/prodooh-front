@@ -1,27 +1,31 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CookieService } from 'ngx-cookie-service';
+import { Token } from '../interfaces/token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseService {
 
-  token: any;
+  token: Token;
 
   constructor(
     private http: HttpClient,
     private cookieService: CookieService
-  ) {
+  ) {}
+
+  refreshToken() {
     if (!this.cookieService.get(environment.sessionCookieStorageKey)) {
-      this.token = {};
+      this.token = undefined;
       return;
     }
-    this.token = JSON.parse(( this.cookieService.get( environment.sessionCookieStorageKey ) ))
+    this.token = JSON.parse(this.cookieService.get( environment.sessionCookieStorageKey));
   }
 
   getQuery( query: string ) {
+    this.refreshToken()
     const headers = new HttpHeaders({
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`
     });
@@ -30,6 +34,7 @@ export class BaseService {
   }
 
   getQueryFile( query: string ) {
+    this.refreshToken()
     const headers = new HttpHeaders({
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`,
       responseType: 'arraybuffer'
@@ -39,6 +44,7 @@ export class BaseService {
   }
 
   postQuery( query: string, data: any ) {
+    this.refreshToken()
     const headers = new HttpHeaders({
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`
     });
@@ -46,6 +52,7 @@ export class BaseService {
   }
 
   putQuery( query: string, data: any ) {
+    this.refreshToken()
     const headers = new HttpHeaders({
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`
     });
@@ -53,6 +60,7 @@ export class BaseService {
   }
 
   deleteQuery( query: string ) {
+    this.refreshToken()
     const headers = new HttpHeaders({
       Authorization: `${ this.token.token_type } ${ this.token.access_token }`
     });
