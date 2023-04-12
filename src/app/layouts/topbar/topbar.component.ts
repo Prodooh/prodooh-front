@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { CookieService } from 'ngx-cookie-service';
@@ -6,6 +6,8 @@ import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-topbar',
@@ -16,7 +18,7 @@ import { HttpClient } from '@angular/common/http';
 /**
  * Topbar component
  */
-export class TopbarComponent implements OnInit {
+export class TopbarComponent implements OnInit, OnDestroy {
 
   element;
   cookieValue;
@@ -30,7 +32,7 @@ export class TopbarComponent implements OnInit {
     private authService: AuthService,
     public languageService: LanguageService,
     public translate: TranslateService,
-    public _cookiesService: CookieService
+    public cookieService: CookieService
   ,
               private http: HttpClient) {}
 
@@ -47,11 +49,13 @@ export class TopbarComponent implements OnInit {
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
+  private subscriptions = new Subscription();
+
   ngOnInit() {
     this.openMobileMenu = false;
     this.element = document.documentElement;
 
-    this.cookieValue = this._cookiesService.get('lang');
+    this.cookieValue = this.cookieService.get('lang');
     const val = this.listLang.filter(x => x.lang === this.cookieValue);
     this.countryName = val.map(element => element.text);
     if (val.length === 0) {
@@ -59,6 +63,10 @@ export class TopbarComponent implements OnInit {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   setLanguage(text: string, lang: string, flag: string) {
@@ -88,8 +96,12 @@ export class TopbarComponent implements OnInit {
    * Logout the user
    */
   logout() {
-    this.authService.logout();
-    this.router.navigate(['/account/login']);
+    this.subscriptions.add(
+      this.authService.logout().subscribe(() => {
+        this.cookieService.delete( environment.sessionCookieStorageKey );
+        this.router.navigate(['/account/login']);
+      })
+    );
   }
 
   /**

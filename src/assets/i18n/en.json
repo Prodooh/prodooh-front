@@ -340,10 +340,21 @@
   "ERRORS": {
     "AUTH": {
       "failed_authentication": "The user credentials were incorrect."
+    },
+    "GENERAL": {
+      "TEXT_1": "Unexpected error",
+      "TEXT_2": "Check with an administrator"
     }
   },
   "GENERAL": {
-    "SEARCH": "Search"
+    "SEARCH": "Search",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "UPDATE": "Update",
+    "MESSAGES": {
+      "TEXT_SUCCESS_1": "Ready!",
+      "TEXT_SUCCESS_2": "All changes were made successfully."
+    }
   },
   "DATATABLES": {
     "sEmptyTable":     "No data available in table",
@@ -367,5 +378,24 @@
         "sSortAscending":  ": activate to sort column ascending",
         "sSortDescending": ": activate to sort column descending"
     }
+  },
+  "AUTH": {
+    "LOGIN": {
+      "WELCOME": "Welcome Back!",
+      "TEXT_1": "Sign in to continue",
+      "FORGOT_PASSWORD": "Forgot password?",
+      "LOGIN": "Log In",
+      "RIGHTS": "All rights reserved."
+    },
+    "UPDATE_PASSWORD": {
+      "UPDATE_PASSWORD": "Update your password",
+      "TEXT_1": "You need to update your password to continue.",
+      "PASSWORD_CONFIRMATION": "Password confirmation"
+    }
+  },
+  "FORM_VALIDATIONS": {
+    "FIELD_REQUIRED": "The field: {{ field }} is required.",
+    "PASSWORDS_NOT_MATCH": "Passwords do not match",
+    "EMAIL_MUST_BE_VALID": "Email must be a valid email address"
   }
 }

@@ -16,7 +16,7 @@ export class LanguageService {
       this.setLanguage('es');
       browserLang = translate.getBrowserLang();
     }
-    translate.use(browserLang.match(/en|es/) ? browserLang : 'en');
+    translate.use(browserLang.match(/en|es/) ? browserLang : 'es');
   }
 
   public setLanguage(lang) {

@@ -14,8 +14,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err.status === 401) {
                 console.log('Hola Mundo');
             }
-
-            const error = err.error.message || err.statusText;
+            
+            const error = err.error || err.statusText;            
             return throwError(error);
         }));
     }

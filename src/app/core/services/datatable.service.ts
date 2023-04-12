@@ -1,16 +1,16 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatatableService {
   constructor(
-    private http: HttpClient
+    private baseService: BaseService
   ) { }
 
   getData(dtOptions: any, type: string) {
-    return this.http.post(`${environment.urlBackend}/datatables/${type}`, dtOptions);
+    return this.baseService.postQuery(`datatables/${type}`, dtOptions);
   }
 }

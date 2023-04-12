@@ -19,7 +19,7 @@ export class UnAuthGuard implements CanActivate {
       return true;
     }
 
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/']);
     return false;
   }
   

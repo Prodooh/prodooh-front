@@ -1,12 +1,10 @@
 <div class="container-fluid p-0">
     <div class="row g-0">
-
         <div class="col-xl-9">
             <div class="auth-full-bg pt-lg-5 p-4">
                 <div class="w-100">
                     <div class="bg-overlay"></div>
                     <div class="d-flex h-100 flex-column">
-
                         <div class="p-4 mt-auto">
                             <div class="row justify-content-center">
                                 <div class="col-lg-7">
@@ -74,17 +72,11 @@
                 <div class="w-100">
 
                     <div class="d-flex flex-column h-100">
-                        <div class="mb-4 mb-md-5">
-                            <a routerLink="/" class="d-block auth-logo">
-                                <img src="assets/images/logo-dark.png" alt="" height="18" class="auth-logo-dark">
-                                <img src="assets/images/logo-light.png" alt="" height="18" class="auth-logo-light">
-                            </a>
-                        </div>
                         <div class="my-auto">
 
                             <div>
-                                <h5 class="text-primary">Welcome Back !</h5>
-                                <p class="text-muted">Sign in to continue to Skote.</p>
+                                <h5 class="text-primary">{{ 'AUTH.LOGIN.WELCOME' | translate }}</h5>
+                                <p class="text-muted">{{ 'AUTH.LOGIN.TEXT_1' | translate }}</p>
                             </div>
 
                             <div *ngIf="error" class="alert alert-danger text-center mt-4 mb-4" role="alert">
@@ -95,29 +87,29 @@
                                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
                                     <div class="mb-3">
-                                        <label for="email">Email</label>
+                                        <label for="email">{{ 'GENERAL.EMAIL' | translate }}</label>
                                         <input type="email" class="form-control" id="email" formControlName="email"
                                             [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
-                                            placeholder="Enter email">
+                                            placeholder="{{ 'GENERAL.EMAIL' | translate }}">
                                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                                            <div *ngIf="f.email.errors.required">Email is required</div>
-                                            <div *ngIf="f.email.errors.email">Email must be a valid email address
+                                            <div *ngIf="f.email.errors.required">
+                                                {{ 'FORM_VALIDATIONS.FIELD_REQUIRED' | translate: { field: 'GENERAL.EMAIL' | translate | lowercase } }}
                                             </div>
+                                            <div *ngIf="f.email.errors.email">{{ 'FORM_VALIDATIONS.EMAIL_MUST_BE_VALID' | translate }}</div>
                                         </div>
                                     </div>
 
                                     <div class="mb-3">
                                         <div class="float-end">
-                                            <a routerLink="/account/recoverpwd-2" class="text-muted">Forgot
-                                                password?</a>
+                                            <a routerLink="/account/recover-password" class="text-muted">{{ 'AUTH.LOGIN.FORGOT_PASSWORD' | translate }}?</a>
                                         </div>
-                                        <label for="userpassword">Password</label>
+                                        <label for="userpassword">{{ 'GENERAL.PASSWORD' | translate }}</label>
                                         <div class="input-group auth-pass-inputgroup">
                                             <input
                                                 [type]="fieldTextType ? 'text' : 'password'" class="form-control"
                                                 formControlName="password"
                                                 [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
-                                                placeholder="Enter password" aria-label="Password"
+                                                placeholder="{{ 'GENERAL.PASSWORD' | translate }}" aria-label="Password"
                                                 aria-describedby="password-addon"
                                             >
                                             <button
@@ -129,60 +121,25 @@
                                                 <i class="mdi mdi-eye-outline"></i>
                                             </button>
                                             <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                                                <span *ngIf="f.password.errors.required">Password is required</span>
+                                                <span *ngIf="f.password.errors.required">
+                                                    {{ 'FORM_VALIDATIONS.FIELD_REQUIRED' | translate: { field: 'GENERAL.PASSWORD' | translate | lowercase } }}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="remember-check">
-                                        <label class="form-check-label" for="remember-check">
-                                            Remember me
-                                        </label>
-                                    </div>
-
                                     <div class="mt-3 d-grid">
-                                        <button class="btn btn-primary btn-block" type="submit">Log In</button>
-                                    </div>
-
-
-                                    <div class="mt-4 text-center">
-                                        <h5 class="font-size-14 mb-3">Sign in with</h5>
-
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item">
-                                                <a href="javascript::void()"
-                                                    class="social-list-item bg-primary text-white border-primary">
-                                                    <i class="mdi mdi-facebook"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript::void()"
-                                                    class="social-list-item bg-info text-white border-info">
-                                                    <i class="mdi mdi-twitter"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <a href="javascript::void()"
-                                                    class="social-list-item bg-danger text-white border-danger">
-                                                    <i class="mdi mdi-google"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <button class="btn btn-primary btn-block" type="submit">{{ 'AUTH.LOGIN.LOGIN' | translate }}</button>
                                     </div>
 
                                 </form>
-                                <div class="mt-5 text-center">
-                                    <p>Don't have an account ? <a routerLink="/account/signup-2"
-                                            class="fw-medium text-primary"> Signup now </a> </p>
-                                </div>
                             </div>
                         </div>
 
                         <div class="mt-4 mt-md-5 text-center">
-                            <p class="mb-0">©
-                                {{year}} Skote. Crafted with <i class="mdi mdi-heart text-danger"></i> by
-                                Themesbrand</p>
+                            <p class="mb-0">
+                                © {{year}} Prodooh. {{ 'AUTH.LOGIN.RIGHTS' | translate }}
+                            </p>
                         </div>
                     </div>
                 </div>
