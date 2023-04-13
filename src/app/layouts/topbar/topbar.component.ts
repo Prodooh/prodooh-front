@@ -5,8 +5,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { PreferenceService } from 'src/app/core/services/preference.service';
 
 @Component({
@@ -33,8 +31,7 @@ export class TopbarComponent implements OnInit {
     public languageService: LanguageService,
     public translate: TranslateService,
     public _cookiesService: CookieService,
-    private preferenceService: PreferenceService,
-    private cookieService: CookieService) { }
+    private preferenceService: PreferenceService) { }
 
   listLang = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
@@ -68,8 +65,6 @@ export class TopbarComponent implements OnInit {
     this.flagvalue = flag;
     this.cookieValue = lang;
     this.languageService.setLanguage(lang);
-    let user = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
-    console.log(user);
     this.preferenceService.savePreferences('lang',lang);
   }
 

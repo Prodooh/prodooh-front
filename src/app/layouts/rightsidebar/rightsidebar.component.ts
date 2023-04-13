@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../core/services/event.service';
-import { LAYOUT_WIDTH, SIDEBAR_TYPE, TOPBAR, LAYOUT_MODE } from '../layouts.model';
+import { LAYOUT_WIDTH, SIDEBAR_TYPE, TOPBAR, LAYOUT_MODE, LAYOUT_HORIZONTAL } from '../layouts.model';
 import { PreferenceService } from 'src/app/core/services/preference.service';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
@@ -31,10 +31,15 @@ export class RightsidebarComponent implements OnInit {
         width: LAYOUT_WIDTH,
         mode: LAYOUT_MODE,
         sidebartype: SIDEBAR_TYPE,
-        layout: LAYOUT_MODE,
+        layout: LAYOUT_HORIZONTAL,
         topbar: TOPBAR,
         lang: 'es'
       };
+      if(this.localStorageService.get('payload') == null){
+        this.localStorageService.set('payload',this.payload);
+      } else {
+        this.payload = this.localStorageService.get('payload');
+      }
     }
 
   ngOnInit() {
@@ -76,7 +81,5 @@ export class RightsidebarComponent implements OnInit {
     this.PreferencesService.savePreferences(type, value); 
     this.payload[type] = value; 
     this.localStorageService.set('payload', this.payload);
-    console.log(this.payload);
-    
   }
 }
