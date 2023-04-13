@@ -1,8 +1,8 @@
 export interface payloadPereferences {
-    changeWidth: string;
-    changeMode: string;
-    changeSidebartype: string;
-    changeLayout: string;
-    changeTopbar: string;
+    width: string;
+    mode: string;
+    sidebartype: string;
+    layout: string;
+    topbar: string;
     lang: string;
 }

@@ -36,25 +36,25 @@ export class LayoutComponent implements OnInit, AfterViewInit {
     // document.body.setAttribute('data-layout-mode', this.mode);
 
     // listen to event and change the layout, theme, etc
-    this.subscriptions.add(this.eventService.subscribe('changeLayout', (layout) => {
+    this.subscriptions.add(this.eventService.subscribe('layout', (layout) => {
       this.layoutType = layout;
     }));
 
     this.LayoutWidth(this.layoutwidth);
 
-    this.subscriptions.add(this.eventService.subscribe('changeWidth', (width) => {
+    this.subscriptions.add(this.eventService.subscribe('width', (width) => {
       this.layoutwidth = width;
       this.LayoutWidth(this.layoutwidth);
     }));
 
     // listen to event and change the layout, theme, etc
-    this.subscriptions.add(this.eventService.subscribe('changeSidebartype', (layout) => {
+    this.subscriptions.add(this.eventService.subscribe('sidebartype', (layout) => {
       this.sidebartype = layout;
       this.changeSidebar(this.sidebartype);
     }));
 
     // Change Mode
-    this.subscriptions.add(this.eventService.subscribe('changeMode', (mode) => {
+    this.subscriptions.add(this.eventService.subscribe('mode', (mode) => {
       this.mode = mode;
       this.changeMode(this.mode);
     }));

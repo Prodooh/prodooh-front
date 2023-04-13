@@ -13,7 +13,7 @@
       <hr />
 
       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="is-layout" (click)="changePreference('changeLayout',$event.target.checked)">
+        <input class="form-check-input" type="checkbox" id="is-layout" (click)="changePreference('layout',$event.target.checked)">
         <label class="form-check-label" for="is-layout">{{ attribute == 'vertical' ? 'vertical' : 'horizontal'
           }}</label>
       </div>
@@ -21,17 +21,17 @@
       <hr />
       <div class="form-check">
         <input class="form-check-input" type="radio" name="layout-width" id="layout-width-fuild" value="fluid"
-          [checked]="payload.changeWidth === 'fluid'" (change)="changePreference('changeWidth', 'fluid')">
+          [checked]="payload.width === 'fluid'" (change)="changePreference('width', 'fluid')">
         <label class="form-check-label" for="layout-width-fuild">Fluid</label>
       </div>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="layout-width" id="layout-width-boxed" value="boxed"
-          [checked]="payload.changeWidth === 'boxed'" (change)="changePreference('changeWidth', 'boxed')">
+          [checked]="payload.width === 'boxed'" (change)="changePreference('width', 'boxed')">
         <label class="form-check-label" for="layout-width-boxed">Boxed</label>
       </div>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="layout-width" id="layout-width-scrollable" value="scrollable"
-          [checked]="payload.changeWidth === 'scrollable'" (change)="changePreference('changeWidth', 'scrollable')">
+          [checked]="payload.width === 'scrollable'" (change)="changePreference('width', 'scrollable')">
         <label class="form-check-label" for="layout-width-scrollable">Scrolable</label>
       </div>
       <div *ngIf="attribute == 'vertical'">
@@ -39,27 +39,27 @@
         <hr />
         <div class="form-check sidebar-setting">
           <input class="form-check-input" type="radio" name="sidebar-color" id="sidebar-color-light" value="light"
-            [checked]="payload.changeSidebartype === 'light'" (change)="changePreference('changeSidebartype', 'light')">
+            [checked]="payload.sidebartype === 'light'" (change)="changePreference('sidebartype', 'light')">
           <label class="form-check-label" for="sidebar-color-light">Light</label>
         </div>
         <div class="form-check sidebar-setting">
           <input class="form-check-input" type="radio" name="sidebar-color" id="sidebar-color-dark" value="dark"
-            [checked]="payload.changeSidebartype === 'dark'" (change)="changePreference('changeSidebartype', 'dark')">
+            [checked]="payload.sidebartype === 'dark'" (change)="changePreference('sidebartype', 'dark')">
           <label class="form-check-label" for="sidebar-color-dark">Dark</label>
         </div>
         <div class="form-check sidebar-setting">
           <input class="form-check-input" type="radio" name="sidebar-color" id="sidebar-color-brand" value="compact"
-            [checked]="payload.changeSidebartype === 'compact'" (change)="changePreference('changeSidebartype', 'compact')">
+            [checked]="payload.sidebartype === 'compact'" (change)="changePreference('sidebartype', 'compact')">
           <label class="form-check-label" for="sidebar-color-brand">Compact</label>
         </div>
         <div class="form-check sidebar-setting">
           <input class="form-check-input" type="radio" name="sidebar-color" id="sidebar-color-icon" value="icon"
-            [checked]="payload.changeSidebartype === 'icon'" (change)="changePreference('changeSidebartype', 'icon')">
+            [checked]="payload.sidebartype === 'icon'" (change)="changePreference('sidebartype', 'icon')">
           <label class="form-check-label" for="sidebar-color-icon">Icon</label>
         </div>
         <div class="form-check sidebar-setting">
           <input class="form-check-input" type="radio" name="sidebar-color" id="sidebar-color" value="colored"
-            [checked]="payload.changeSidebartype === 'colored'" (change)="changePreference('changeSidebartype', 'colored')">
+            [checked]="payload.sidebartype === 'colored'" (change)="changePreference('sidebartype', 'colored')">
           <label class="form-check-label" for="sidebar-color">Colored</label>
         </div>
       </div>
@@ -68,12 +68,12 @@
       <hr />
       <div class="form-check sidebar-setting">
         <input class="form-check-input" type="radio" name="theme-color" id="theme-color-light"
-          [checked]="payload.changeMode === 'light'" (change)="changePreference('changeMode', 'light')">
+          [checked]="payload.mode === 'light'" (change)="changePreference('mode', 'light')">
         <label class="form-check-label" for="theme-color-light">Light</label>
       </div>
       <div class="form-check sidebar-setting">
         <input class="form-check-input" type="radio" name="theme-color" id="theme-color-dark"
-          [checked]="payload.changeMode === 'dark'" (change)="changePreference('changeMode', 'dark')">
+          [checked]="payload.mode === 'dark'" (change)="changePreference('mode', 'dark')">
         <label class="form-check-label" for="theme-color-dark">Dark</label>
       </div>
 
@@ -82,17 +82,17 @@
         <hr />
         <div class="form-check">
           <input class="form-check-input" type="radio" name="topbar-color" id="topbar-color-light" value="light"
-            [checked]="payload.changeTopbar === 'light'" (change)="changePreference('changeTopbar', 'light')">
+            [checked]="payload.topbar === 'light'" (change)="changePreference('topbar', 'light')">
           <label class="form-check-label" for="topbar-color-light">Light</label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="topbar-color" id="topbar-color-dark" value="dark"
-            [checked]="payload.changeTopbar === 'dark'" (change)="changePreference('changeTopbar', 'dark')">
+            [checked]="payload.topbar === 'dark'" (change)="changePreference('topbar', 'dark')">
           <label class="form-check-label" for="topbar-color-dark">Dark</label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="radio" name="topbar-color" id="topbar-color-colored" value="colored"
-            [checked]="payload.changeTopbar === 'colored'" (change)="changePreference('changeTopbar', 'colored')">
+            [checked]="payload.topbar === 'colored'" (change)="changePreference('topbar', 'colored')">
           <label class="form-check-label" for="topbar-color-colored">Colored</label>
         </div>
       </div>

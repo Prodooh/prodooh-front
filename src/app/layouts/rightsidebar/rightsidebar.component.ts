@@ -28,11 +28,11 @@ export class RightsidebarComponent implements OnInit {
     private cookieService: CookieService,
     private localStorageService: LocalStorageService) { 
       this.payload = {
-        changeWidth: LAYOUT_WIDTH,
-        changeMode: LAYOUT_MODE,
-        changeSidebartype: SIDEBAR_TYPE,
-        changeLayout: LAYOUT_MODE,
-        changeTopbar: TOPBAR,
+        width: LAYOUT_WIDTH,
+        mode: LAYOUT_MODE,
+        sidebartype: SIDEBAR_TYPE,
+        layout: LAYOUT_MODE,
+        topbar: TOPBAR,
         lang: 'es'
       };
     }
@@ -68,7 +68,6 @@ export class RightsidebarComponent implements OnInit {
    * Change Topbar
    */
   changePreference(type: string, value: string| boolean) {
-    console.log(type,value);
     if(typeof value == "boolean"){
       value = value ? 'vertical' : 'horizontal'  ;
       this.attribute = value;
