@@ -51,7 +51,6 @@ export class DatatableComponent implements OnInit, OnDestroy {
       stateRestore: true,
       language: this.translate.instant('DATATABLES'),
       ajax: (dataTablesParameters: any, callback: any) => {
-
         this.subscriptions.add(this.dataService.getData(dataTablesParameters, this.serviceType).subscribe((resp: any) => {
           this.data = resp.data
           callback({
@@ -67,7 +66,6 @@ export class DatatableComponent implements OnInit, OnDestroy {
             document.querySelector(".odd")?.remove();
           }
         }));
-
       },
       columns: this.columns.map(
         (column: any) => ({ data: column })

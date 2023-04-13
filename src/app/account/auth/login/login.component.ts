@@ -68,13 +68,14 @@ export class LoginComponent implements OnInit {
       } else {
         this.authFackservice.login(this.f.email.value, this.f.password.value)
           .pipe(first())
-          .subscribe(
-            data => {
+          .subscribe({
+            next(resp) {
               this.router.navigate(['/']);
             },
-            error => {
-              this.error = error ? error : '';
-            });
+            error(msg) {
+             return msg;
+            }
+           });
       }
     }
   }

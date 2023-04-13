@@ -72,16 +72,17 @@ export class Register2Component implements OnInit {
       } else {
         this.userService.register(this.signupForm.value)
           .pipe(first())
-          .subscribe(
-            data => {
+          .subscribe({
+            next(resp) {
               this.successmsg = true;
               if (this.successmsg) {
                 this.router.navigate(['/account/login']);
               }
             },
-            error => {
+            error(error) {
               this.error = error ? error : '';
-            });
+            }
+          })
       }
     }
   }
