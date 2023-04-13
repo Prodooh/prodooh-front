@@ -377,5 +377,9 @@
       "SURNAMES": "Surnames",
       "ROLE": "Role"
     }
+  },
+  "BUTTONS":{
+    "EDIT": "Edit",
+    "DELETE": "Delete"
   }
 }

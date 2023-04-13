@@ -30,5 +30,7 @@ import { GeneralModule } from './general/general.module';
     PickerModule,
     GeneralModule
   ],
+  declarations: [
+  ],
 })
 export class PagesModule { }

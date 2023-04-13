@@ -28,12 +28,16 @@ export class DatatableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    setTimeout(()=> this.loadOptionsDatatable(), 650);
-    setTimeout(() => this.loadConfigFooterDatatable(), 700); 
+    setTimeout(() => this.loadOptionsDatatable(), 650);
+    setTimeout(() => this.loadConfigFooterDatatable(), 700);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  removeState(){
+    window.location.reload();
   }
 
   loadOptionsDatatable(): void {
@@ -44,9 +48,10 @@ export class DatatableComponent implements OnInit, OnDestroy {
       processing: true,
       stateSave: true,
       stateDuration: 600,
+      stateRestore: true,
       language: this.translate.instant('DATATABLES'),
       ajax: (dataTablesParameters: any, callback: any) => {
-        
+
         this.subscriptions.add(this.dataService.getData(dataTablesParameters, this.serviceType).subscribe((resp: any) => {
           this.data = resp.data
           callback({
@@ -62,7 +67,7 @@ export class DatatableComponent implements OnInit, OnDestroy {
             document.querySelector(".odd")?.remove();
           }
         }));
-        
+
       },
       columns: this.columns.map(
         (column: any) => ({ data: column })
@@ -86,8 +91,8 @@ export class DatatableComponent implements OnInit, OnDestroy {
   }
 
   loadConfigFooterDatatable(): void {
-    $( ".dataTables_filter label" ).addClass( "d-inline-flex align-items-center" );
-    $( ".dataTables_filter input" ).addClass( "form-control" );
+    $(".dataTables_filter label").addClass("d-inline-flex align-items-center");
+    $(".dataTables_filter input").addClass("form-control");
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;

@@ -1,5 +1,6 @@
 <div *ngIf="dtOptions" class="card">
   <div class="card-body">
+    <button class="btn btn-outline-dark" (click)="removeState()"> remove</button>
     <div class="table-responsive">
       <table datatable [dtOptions]="dtOptions"
         class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
@@ -11,7 +12,8 @@
         <tbody>
           <tr *ngFor="let item of data">
             <td class="text-center" *ngFor="let column of columns">
-              {{column == 'id' ? item[column] : item[column] | translate | titlecase }}
+              {{column == 'id' ? item[column] : item[column] | translate | titlecase }} 
+              <app-users-buttons *ngIf="column == 'buttons'"></app-users-buttons>
             </td>
           </tr>
         </tbody>

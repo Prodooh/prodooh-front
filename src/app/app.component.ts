@@ -8,8 +8,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 export class AppComponent implements OnInit  {
 
   constructor(
-    private translate: TranslateService,
-
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {

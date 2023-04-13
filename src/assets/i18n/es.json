@@ -378,5 +378,9 @@
       "SURNAMES": "Apellidos",
       "ROLE": "Rol"
     }
+  },
+  "BUTTONS":{
+    "EDIT": "Editar",
+    "DELETE": "Eliminar"
   }
 }

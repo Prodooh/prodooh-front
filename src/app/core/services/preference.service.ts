@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { BaseService } from './base.service';
 
 
 @Injectable({
@@ -9,12 +10,12 @@ import { environment } from 'src/environments/environment';
 export class PreferenceService {
 
   constructor(
-    private http: HttpClient
+    private baseService: BaseService
   ) { }
 
   savePreferences(type: string, value: string | boolean) {
     let obj = {};
     obj[type] = value; 
-    return this.http.post<any>(`${environment.urlBackend}/users/preferences`, obj).subscribe();
+    return this.baseService.postQuery('users/preferences', obj).subscribe();
   }
 }
