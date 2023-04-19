@@ -71,9 +71,7 @@ export class Login2Component implements OnInit, OnDestroy {
         password: this.f.password.value
       }).subscribe({
         next: (resp) => {
-          const expirationDate = new Date();
-          expirationDate.setDate(expirationDate.getDate() + 30);
-          this.cookieService.set(`${ environment.sessionCookieStorageKey }`, JSON.stringify( resp ), expirationDate);
+          this.cookieService.set(`${ environment.sessionCookieStorageKey }`, JSON.stringify( resp ), 15);
           this.router.navigate(['/'])
         },
         error: (error) => {
