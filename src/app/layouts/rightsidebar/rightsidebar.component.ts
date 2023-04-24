@@ -46,9 +46,15 @@ export class RightsidebarComponent implements OnInit {
 
   ngOnInit() {
     this.user = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
+
     Object.entries(this.payload).forEach(([key, value]) => {
-      this.eventService.broadcast(key, value);
+      if (key !== 'width') {
+        this.eventService.broadcast(key, value);
+      }
     });
+
+    this.eventService.broadcast('width', this.payload['width']);
+
     /**
      * horizontal-vertical layput set
      */
