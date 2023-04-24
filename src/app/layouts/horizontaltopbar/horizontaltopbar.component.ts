@@ -86,11 +86,15 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestr
    */
   logout() {
     this.subscriptions.add(
-      this.authService.logout().subscribe(() => {        
-        this.cookieService.delete( environment.sessionCookieStorageKey );
-        this.router.navigate(['/account/login']);
+      this.authService.logout().subscribe({
+        next: () => {
+          this.cookieService.delete( environment.sessionCookieStorageKey, '/' );
+        },
+        complete: () => {
+          this.router.navigate(['/account/login']);
+        }
       })
-    );
+    )
   }
 
   /**

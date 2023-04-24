@@ -64,7 +64,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    // this.subscriptions.unsubscribe();
   }
 
   setLanguage(text: string, lang: string, flag: string) {
@@ -94,11 +94,15 @@ export class TopbarComponent implements OnInit, OnDestroy {
    */
   logout() {
     this.subscriptions.add(
-      this.authService.logout().subscribe(() => {
-        this.cookieService.delete( environment.sessionCookieStorageKey );
-        this.router.navigate(['/account/login']);
+      this.authService.logout().subscribe({
+        next: () => {
+          this.cookieService.delete( environment.sessionCookieStorageKey, '/' );
+        },
+        complete: () => {
+          this.router.navigate(['/account/login']);
+        }
       })
-    );
+    )
   }
 
   /**
