@@ -57,11 +57,6 @@
             [checked]="payload.sidebartype === 'icon'" (change)="changePreference('sidebartype', 'icon')">
           <label class="form-check-label" for="sidebar-color-icon">Icon</label>
         </div>
-        <div class="form-check sidebar-setting">
-          <input class="form-check-input" type="radio" name="sidebar-color" id="sidebar-color" value="colored"
-            [checked]="payload.sidebartype === 'colored'" (change)="changePreference('sidebartype', 'colored')">
-          <label class="form-check-label" for="sidebar-color">Colored</label>
-        </div>
       </div>
 
       <h6 class="mt-4 mb-3">Theme Mode</h6>
@@ -89,11 +84,6 @@
           <input class="form-check-input" type="radio" name="topbar-color" id="topbar-color-dark" value="dark"
             [checked]="payload.topbar === 'dark'" (change)="changePreference('topbar', 'dark')">
           <label class="form-check-label" for="topbar-color-dark">Dark</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="topbar-color" id="topbar-color-colored" value="colored"
-            [checked]="payload.topbar === 'colored'" (change)="changePreference('topbar', 'colored')">
-          <label class="form-check-label" for="topbar-color-colored">Colored</label>
         </div>
       </div>
     </div>

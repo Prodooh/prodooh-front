@@ -56,7 +56,7 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy {
         next: () => {
           let tokenLocalStorage = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey));
           tokenLocalStorage.user.is_change_password = true;
-          this.cookieService.set(environment.sessionCookieStorageKey, JSON.stringify(tokenLocalStorage));
+          this.cookieService.set(environment.sessionCookieStorageKey, JSON.stringify(tokenLocalStorage),15,'/');
           this.sweetAlertService.success();
           this.router.navigateByUrl('/');
         },

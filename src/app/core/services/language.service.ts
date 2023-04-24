@@ -21,7 +21,7 @@ export class LanguageService {
 
   public setLanguage(lang) {
     this.translate.use(lang);
-    this.cookieService.set('lang', lang);
+    this.cookieService.set('lang', lang,15,'/');
   }
 
 }
