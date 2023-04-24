@@ -26,7 +26,7 @@ $sidebar-dark-menu-item-active-color: #ffffff;
 // Topbar - Deafult Light
 $header-height: 70px;
 $header-bg:                                           var(--#{$prefix}heading-bg);
-$header-item-color:                                   #e9ecef;
+$header-item-color:                                   var(--#{$prefix}header-item-color);
 
 // Topbar - Dark
 $header-dark-bg:                                      var(--#{$prefix}heading-dark-bg);
