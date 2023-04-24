@@ -1,7 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DatatableService } from '../../../core/services/datatable.service';
 import { DataTableDirective } from 'angular-datatables';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.css']
 })
-export class DatatableComponent implements OnInit {
+export class DatatableComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   datatableElement!: DataTableDirective;
 
@@ -18,6 +19,7 @@ export class DatatableComponent implements OnInit {
 
   dtOptions = undefined;
   data: any;
+  private subscriptions = new Subscription();
 
   constructor(
     private dataService: DatatableService,
@@ -26,8 +28,16 @@ export class DatatableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    setTimeout(()=> this.loadOptionsDatatable(), 650);
-    setTimeout(() => this.loadConfigFooterDatatable(), 700); 
+    setTimeout(() => this.loadOptionsDatatable(), 650);
+    setTimeout(() => this.loadConfigFooterDatatable(), 700);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  removeState(){
+    window.location.reload();
   }
 
   loadOptionsDatatable(): void {
@@ -36,16 +46,18 @@ export class DatatableComponent implements OnInit {
       pageLength: 10,
       serverSide: true,
       processing: true,
+      stateSave: true,
+      stateDuration: 600,
+      stateRestore: true,
       language: this.translate.instant('DATATABLES'),
       ajax: (dataTablesParameters: any, callback: any) => {
-        
-        this.dataService.getData(dataTablesParameters, this.serviceType).subscribe((resp: any) => {
+        this.subscriptions.add(this.dataService.getData(dataTablesParameters, this.serviceType).subscribe((resp: any) => {
           this.data = resp.data
           callback({
             recordsTotal: resp.recordsTotal,
             recordsFiltered: resp.recordsFiltered,
             data: resp.data.map((item: any) => ({
-              ...item, 'botones': null
+              ...item, 'buttons': null
             }))
           })
           $("tr.odd")?.hide();
@@ -53,8 +65,7 @@ export class DatatableComponent implements OnInit {
           if (resp.data.length != 0) {
             document.querySelector(".odd")?.remove();
           }
-        })
-        
+        }));
       },
       columns: this.columns.map(
         (column: any) => ({ data: column })
@@ -68,6 +79,7 @@ export class DatatableComponent implements OnInit {
         {
           extend: 'excel',
           className: 'btn btn-outline-primary',
+          title: `Export_${this.serviceType}_${Date.now()}`,
           exportOptions: {
             columns: Array.from(Array(this.columns.length).keys())
           }
@@ -77,8 +89,8 @@ export class DatatableComponent implements OnInit {
   }
 
   loadConfigFooterDatatable(): void {
-    $( ".dataTables_filter label" ).addClass( "d-inline-flex align-items-center" );
-    $( ".dataTables_filter input" ).addClass( "form-control" );
+    $(".dataTables_filter label").addClass("d-inline-flex align-items-center");
+    $(".dataTables_filter input").addClass("form-control");
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;

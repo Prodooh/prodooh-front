@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Auth } from '../interfaces/auth';
 import { CookieService } from 'ngx-cookie-service';
 import { BaseService } from './base.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private baseService: BaseService
+    private baseService: BaseService,
+    private cookieService: CookieService,
+    private localStorageService: LocalStorageService
   ) {}
 
   login( userAuth: Auth ) {

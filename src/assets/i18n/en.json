@@ -397,5 +397,19 @@
     "FIELD_REQUIRED": "The field: {{ field }} is required.",
     "PASSWORDS_NOT_MATCH": "Passwords do not match",
     "EMAIL_MUST_BE_VALID": "Email must be a valid email address"
+  },
+  "TABLES":{
+    "USERS":{
+      "ID": "ID",
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "BUTTONS": "Buttons",
+      "SURNAMES": "Surnames",
+      "ROLE": "Role"
+    }
+  },
+  "BUTTONS":{
+    "EDIT": "Edit",
+    "DELETE": "Delete"
   }
 }

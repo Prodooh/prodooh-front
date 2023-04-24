@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../core/services/event.service';
-import { LAYOUT_WIDTH, SIDEBAR_TYPE, TOPBAR, LAYOUT_MODE } from '../layouts.model';
+import { LAYOUT_WIDTH, SIDEBAR_TYPE, TOPBAR, LAYOUT_MODE, LAYOUT_HORIZONTAL } from '../layouts.model';
 import { PreferenceService } from 'src/app/core/services/preference.service';
+import { CookieService } from 'ngx-cookie-service';
+import { environment } from 'src/environments/environment';
+import { payloadPereferences } from 'src/app/core/interfaces/payload-preferences';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Component({
   selector: 'app-rightsidebar',
@@ -16,21 +20,35 @@ export class RightsidebarComponent implements OnInit {
 
   isVisible: string;
   attribute: string;
+  user: any;
+  payload: payloadPereferences;
 
-  width: string;
-  sidebartype: string;
-  mode: string;
-  topbar: string;
-
-  constructor(private eventService: EventService,
-    private PreferencesService: PreferenceService) { }
+  constructor (
+    private eventService: EventService,
+    private preferencesService: PreferenceService,
+    private cookieService: CookieService,
+    private localStorageService: LocalStorageService
+  ) { 
+      this.payload = {
+        width: LAYOUT_WIDTH,
+        mode: LAYOUT_MODE,
+        sidebartype: SIDEBAR_TYPE,
+        layout: LAYOUT_HORIZONTAL,
+        topbar: TOPBAR,
+        lang: 'es'
+      };
+      if(this.localStorageService.get('payload') == null){
+        this.localStorageService.set('payload',this.payload);
+      } else {
+        this.payload = this.localStorageService.get('payload');
+      }
+    }
 
   ngOnInit() {
-    this.width = LAYOUT_WIDTH;
-    this.sidebartype = SIDEBAR_TYPE;
-    this.topbar = TOPBAR;
-    this.mode = LAYOUT_MODE;
-
+    this.user = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
+    Object.entries(this.payload).forEach(([key, value]) => {
+      this.eventService.broadcast(key, value);
+    });
     /**
      * horizontal-vertical layput set
      */
@@ -54,42 +72,14 @@ export class RightsidebarComponent implements OnInit {
   /**
    * Change Topbar
    */
-  changeTopbar(topbar: string) {
-    this.topbar = topbar;
-    this.eventService.broadcast('changeTopbar', topbar);
-    this.PreferencesService.savePreferences('topbar',topbar);
+  changePreference(type: string, value: string| boolean) {
+    if(typeof value == "boolean"){
+      value = value ? 'vertical' : 'horizontal';
+      this.attribute = value;
     }
-
-  /**
-   * Change the layout onclick
-   * @param layout Change the layout
-   */
-  changeLayout(layout) {
-    if (layout.target.checked == true) {
-      this.eventService.broadcast('changeLayout', 'vertical');
-      this.PreferencesService.savePreferences('layout','vertical');
-    }
-    else {
-      this.eventService.broadcast('changeLayout', 'horizontal');
-      this.PreferencesService.savePreferences('layout','horizontal');
-    }
-  }
-
-  changeWidth(width: string) {
-    this.width = width;
-    this.eventService.broadcast('changeWidth', width);
-    this.PreferencesService.savePreferences('width',width);
-  }
-
-  changeSidebartype(sidebar: string) {
-    this.sidebartype = sidebar;
-    this.eventService.broadcast('changeSidebartype', sidebar);
-    this.PreferencesService.savePreferences('sidebar',sidebar);
-  }
-
-  changeMode(themeMode: string) {
-    this.mode = themeMode;
-    this.eventService.broadcast('changeMode', themeMode);
-    this.PreferencesService.savePreferences('themeMode',themeMode);
+    this.eventService.broadcast(type, value);
+    this.payload[type] = value; 
+    this.localStorageService.set('payload', this.payload);
+    this.preferencesService.savePreferences(this.payload); 
   }
 }

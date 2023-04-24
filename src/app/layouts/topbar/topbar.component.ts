@@ -5,7 +5,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
-import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -33,8 +32,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     public languageService: LanguageService,
     public translate: TranslateService,
     public cookieService: CookieService
-  ,
-              private http: HttpClient) {}
+  ) { }
 
   listLang = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
@@ -74,7 +72,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.flagvalue = flag;
     this.cookieValue = lang;
     this.languageService.setLanguage(lang);
-    this.http.post<any>('http://base-service.test/users/preference/1',{ language: lang }).subscribe();
   }
 
   /**

@@ -11,7 +11,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { PagesRoutingModule } from './pages-routing.module';
 import { DashboardsModule } from './dashboards/dashboards.module';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from '../shared/shared.module';
+import { GeneralModule } from './general/general.module';
 
 @NgModule({
   imports: [
@@ -28,7 +28,9 @@ import { SharedModule } from '../shared/shared.module';
     NgbTooltipModule,
     NgbCollapseModule,
     PickerModule,
-    SharedModule
+    GeneralModule
+  ],
+  declarations: [
   ],
 })
 export class PagesModule { }

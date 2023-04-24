@@ -398,5 +398,19 @@
     "FIELD_REQUIRED": "El campo: {{ field }} es requerido.",
     "PASSWORDS_NOT_MATCH": "Las contraseñas no coinciden.",
     "EMAIL_MUST_BE_VALID": "El correo electrónico debe ser una dirección de correo electrónico válida."
+  },
+  "TABLES":{
+    "USERS":{
+      "ID": "ID",
+      "NAME": "Nombre",
+      "EMAIL": "Correo electrónico",
+      "BUTTONS": "Botones",
+      "SURNAMES": "Apellidos",
+      "ROLE": "Rol"
+    }
+  },
+  "BUTTONS":{
+    "EDIT": "Editar",
+    "DELETE": "Eliminar"
   }
 }

@@ -5,6 +5,7 @@ import { EventService } from '../core/services/event.service';
 import {
   LAYOUT_VERTICAL, LAYOUT_HORIZONTAL, LAYOUT_WIDTH, TOPBAR, LAYOUT_MODE, SIDEBAR_TYPE
 } from './layouts.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -20,6 +21,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   topbar: string;
   mode: string;
   sidebartype: string;
+  private subscriptions = new Subscription();
 
   constructor(private eventService: EventService) { }
 
@@ -34,35 +36,47 @@ export class LayoutComponent implements OnInit, AfterViewInit {
     // document.body.setAttribute('data-layout-mode', this.mode);
 
     // listen to event and change the layout, theme, etc
-    this.eventService.subscribe('changeLayout', (layout) => {
-      this.layoutType = layout;
-    });
+    this.subscriptions.add(
+      this.eventService.subscribe('layout', (layout) => {
+        this.layoutType = layout;
+      })
+    );
 
     this.LayoutWidth(this.layoutwidth);
 
-    this.eventService.subscribe('changeWidth', (width) => {
-      this.layoutwidth = width;
-      this.LayoutWidth(this.layoutwidth);
-    });
+    this.subscriptions.add(
+      this.eventService.subscribe('width', (width) => {
+        this.layoutwidth = width;
+        this.LayoutWidth(this.layoutwidth);
+      })
+    );
 
     // listen to event and change the layout, theme, etc
-    this.eventService.subscribe('changeSidebartype', (layout) => {
-      this.sidebartype = layout;
-      this.changeSidebar(this.sidebartype);
-    });
+    this.subscriptions.add(
+      this.eventService.subscribe('sidebartype', (layout) => {
+        this.sidebartype = layout;
+        this.changeSidebar(this.sidebartype);
+      })
+    );
 
     // Change Mode
-    this.eventService.subscribe('changeMode', (mode) => {
-      this.mode = mode;
-      this.changeMode(this.mode);
-    });
+    this.subscriptions.add(
+      this.eventService.subscribe('mode', (mode) => {
+        this.mode = mode;
+        this.changeMode(this.mode);
+      })
+    );
 
     this.changeSidebar(this.sidebartype);
     this.changeMode(this.mode);
   }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   // Theme Drk Light Mode
-  changeMode(value) {    
+  changeMode(value) {
     switch (value) {
       case "light":
         document.body.setAttribute('data-layout-mode', 'light');
@@ -111,7 +125,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
         document.body.classList.add('vertical-collpsed');
         document.body.setAttribute('data-sidebar', 'dark');
         document.body.removeAttribute('data-layout-size');
-        document.body.setAttribute('data-keep-enlarged',"true");
+        document.body.setAttribute('data-keep-enlarged', "true");
         document.body.removeAttribute('data-topbar');
         document.body.removeAttribute('data-layout-scrollable');
         break;
