@@ -23,16 +23,18 @@ export class HorizontalComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.topbar = TOPBAR;
 
-    this.subscriptions.add(this.eventService.subscribe('changeTopbar', (topbar) => {
-      this.topbar = topbar;
-      this.changeTopbar(this.topbar);
-    }));
+    this.subscriptions.add(
+      this.eventService.subscribe('changeTopbar', (topbar) => {
+        this.topbar = topbar;
+        this.changeTopbar(this.topbar);
+      })
+    );
 
     document.body.setAttribute('data-layout', 'horizontal');
     document.body.removeAttribute('data-sidebar');
     document.body.removeAttribute('data-layout-size');
     document.body.removeAttribute('data-keep-enlarged');
-    document.body.removeAttribute('data-sidebar-small');    
+    document.body.removeAttribute('data-sidebar-small');
 
     this.changeTopbar(this.topbar);
   }

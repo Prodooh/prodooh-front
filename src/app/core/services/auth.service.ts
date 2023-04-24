@@ -24,7 +24,7 @@ export class AuthService {
     return this.http.post( `${ environment.urlBackend }/auth/token`, userAuth )
       .pipe(
         map ( (resp: any) => {
-          this.cookieService.set(`${ environment.sessionCookieStorageKey }`, ( JSON.stringify( resp )), 5000);
+          this.cookieService.set(`${ environment.sessionCookieStorageKey }`, ( JSON.stringify( resp )), 5);
           this.localStorageService.set('payload', resp.user.payload);
           return resp;
         })

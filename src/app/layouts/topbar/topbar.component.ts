@@ -30,8 +30,8 @@ export class TopbarComponent implements OnInit {
     private authService: AuthService,
     public languageService: LanguageService,
     public translate: TranslateService,
-    public _cookiesService: CookieService,
-    private preferenceService: PreferenceService) { }
+    public _cookiesService: CookieService
+  ) { }
 
   listLang = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
@@ -65,7 +65,6 @@ export class TopbarComponent implements OnInit {
     this.flagvalue = flag;
     this.cookieValue = lang;
     this.languageService.setLanguage(lang);
-    this.preferenceService.savePreferences('lang',lang);
   }
 
   /**

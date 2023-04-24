@@ -13,9 +13,7 @@ export class PreferenceService {
     private baseService: BaseService
   ) { }
 
-  savePreferences(type: string, value: string | boolean) {
-    let obj = {};
-    obj[type] = value; 
+  savePreferences(obj: object) {
     return this.baseService.postQuery('users/preferences', obj).subscribe();
   }
 }

@@ -23,10 +23,12 @@ export class RightsidebarComponent implements OnInit {
   user: any;
   payload: payloadPereferences;
 
-  constructor(private eventService: EventService,
-    private PreferencesService: PreferenceService,
+  constructor (
+    private eventService: EventService,
+    private preferencesService: PreferenceService,
     private cookieService: CookieService,
-    private localStorageService: LocalStorageService) { 
+    private localStorageService: LocalStorageService
+  ) { 
       this.payload = {
         width: LAYOUT_WIDTH,
         mode: LAYOUT_MODE,
@@ -43,9 +45,7 @@ export class RightsidebarComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.payload = this.localStorageService.get('payload'); 
     this.user = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
-
     Object.entries(this.payload).forEach(([key, value]) => {
       this.eventService.broadcast(key, value);
     });
@@ -74,12 +74,12 @@ export class RightsidebarComponent implements OnInit {
    */
   changePreference(type: string, value: string| boolean) {
     if(typeof value == "boolean"){
-      value = value ? 'vertical' : 'horizontal'  ;
+      value = value ? 'vertical' : 'horizontal';
       this.attribute = value;
     }
     this.eventService.broadcast(type, value);
-    this.PreferencesService.savePreferences(type, value); 
     this.payload[type] = value; 
     this.localStorageService.set('payload', this.payload);
+    this.preferencesService.savePreferences(this.payload); 
   }
 }

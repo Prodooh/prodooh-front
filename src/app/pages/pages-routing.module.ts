@@ -9,10 +9,7 @@ const routes: Routes = [
     path: "",
     component: DefaultComponent
   },
-  {
-    path: 'users-list',  
-    component: UsersListComponent
-  },
+  {path: 'users', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule)},
   { path: 'dashboards', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule) },
   { path: 'administrator', loadChildren: () => import('./administrator/administrator.module').then(m => m.AdministratorModule) },
 ];

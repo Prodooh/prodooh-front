@@ -6,7 +6,7 @@
         class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
         <thead>
           <tr>
-            <th class="text-center" *ngFor="let column of columns">{{ ('TABLES.'+serviceType+'.'+ column).toUpperCase() | translate}}</th>
+            <th class="text-center" *ngFor="let column of columns">{{ ('TABLES.'+serviceType+'.'+ column) | uppercase | translate}}</th>
           </tr>
         </thead>
         <tbody>

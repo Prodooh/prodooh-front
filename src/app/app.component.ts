@@ -15,9 +15,6 @@ export class AppComponent implements OnInit  {
     this.translate.onLangChange.subscribe( {
       next(langChangeEvent: LangChangeEvent) {
         this.translate.use(langChangeEvent.lang);
-      },
-      error(msg) {
-       return msg;
       }
     })
   }
