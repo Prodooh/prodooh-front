@@ -24,7 +24,7 @@ export class HorizontalComponent implements OnInit, OnDestroy {
     this.topbar = TOPBAR;
 
     this.subscriptions.add(
-      this.eventService.subscribe('changeTopbar', (topbar) => {
+      this.eventService.subscribe('topbar', (topbar) => {
         this.topbar = topbar;
         this.changeTopbar(this.topbar);
       })
