@@ -15,9 +15,9 @@ export class AppComponent implements OnInit  {
   ) {}
 
   ngOnInit() {
-    this.translate.onLangChange.subscribe( {
-      next(langChangeEvent: LangChangeEvent) {
-        this.translate.use(langChangeEvent.lang);
+    this.translate.onLangChange.subscribe({
+      next: (langChangeEvent: LangChangeEvent) => {
+        this.languageService.setLanguage(langChangeEvent.lang)
       }
     })
   }

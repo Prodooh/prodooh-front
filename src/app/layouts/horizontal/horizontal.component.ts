@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TOPBAR } from "../layouts.model";
 import { EventService } from '../../core/services/event.service';
 import { Subscription } from 'rxjs';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 /**
  * Horizontal-layout component
  */
-export class HorizontalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HorizontalComponent implements OnInit, OnDestroy {
 
   topbar: string;
   private subscriptions = new Subscription();
@@ -41,9 +41,6 @@ export class HorizontalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
-  }
-
-  ngAfterViewInit() {
   }
 
   /**

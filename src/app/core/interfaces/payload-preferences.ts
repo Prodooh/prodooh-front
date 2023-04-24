@@ -1,4 +1,4 @@
-export interface payloadPereferences {
+export interface PayloadPereferences {
     width: string;
     mode: string;
     sidebartype: string;

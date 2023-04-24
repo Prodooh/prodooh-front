@@ -4,7 +4,7 @@ import { LAYOUT_WIDTH, SIDEBAR_TYPE, TOPBAR, LAYOUT_MODE, LAYOUT_HORIZONTAL } fr
 import { PreferenceService } from 'src/app/core/services/preference.service';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
-import { payloadPereferences } from 'src/app/core/interfaces/payload-preferences';
+import { PayloadPereferences } from 'src/app/core/interfaces/payload-preferences';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class RightsidebarComponent implements OnInit {
   isVisible: string;
   attribute: string;
   user: any;
-  payload: payloadPereferences;
+  payload: PayloadPereferences;
 
   constructor (
     private eventService: EventService,

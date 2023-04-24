@@ -12,10 +12,10 @@ import { Subscription } from 'rxjs';
 })
 export class DatatableComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
-  datatableElement!: DataTableDirective;
+  datatableElement: DataTableDirective;
 
-  @Input() serviceType!: string;
-  @Input() columns!: any;
+  @Input() serviceType: string;
+  @Input() columns: any;
 
   dtOptions = undefined;
   data: any;
@@ -91,7 +91,7 @@ export class DatatableComponent implements OnInit, OnDestroy {
   loadConfigFooterDatatable(): void {
     $(".dataTables_filter label").addClass("d-inline-flex align-items-center");
     $(".dataTables_filter input").addClass("form-control");
-    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+    this.datatableElement?.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.columns().every(function () {
         const that = this;
         $('input', this.footer()).keyup(function (e) {
