@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="table-responsive">
       <table datatable [dtOptions]="dtOptions"
-        class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
+        class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline w-100">
         <thead>
           <tr>
             <th class="text-center" *ngFor="let column of columns">{{ ('TABLES.'+serviceType+'.'+ column) | uppercase | translate}}</th>
