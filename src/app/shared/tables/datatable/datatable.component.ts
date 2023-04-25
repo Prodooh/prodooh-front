@@ -42,6 +42,7 @@ export class DatatableComponent implements OnInit, OnDestroy {
 
   loadOptionsDatatable(): void {
     this.dtOptions = {
+      
       pagingType: 'numbers',
       pageLength: 10,
       serverSide: true,
@@ -68,20 +69,24 @@ export class DatatableComponent implements OnInit, OnDestroy {
         }));
       },
       columns: this.columns.map(
-        (column: any) => ({ data: column })
+        (column: any) => ({ data: column, searchable: column == 'buttons' ? false : true })
       ),
       dom: 'lBfrtip',
       buttons: [
         {
           extend: 'copy',
-          className: 'btn btn-outline-primary'
+          className: 'btn btn-outline-primary',
+          title: `Export_${this.serviceType}_${Date.now()}`,
+          exportOptions: {
+            columns: Array.from(Array(this.columns.length -1).keys())
+          }
         },
         {
           extend: 'excel',
           className: 'btn btn-outline-primary',
           title: `Export_${this.serviceType}_${Date.now()}`,
           exportOptions: {
-            columns: Array.from(Array(this.columns.length).keys())
+            columns: Array.from(Array(this.columns.length -1).keys())
           }
         }
       ]
