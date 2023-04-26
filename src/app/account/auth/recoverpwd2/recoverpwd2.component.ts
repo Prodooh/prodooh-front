@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthenticationService } from '../../../core/services/auth-firebase.service';
-import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../core/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recoverpwd2',
@@ -13,16 +12,21 @@ import { environment } from '../../../../environments/environment';
 })
 export class Recoverpwd2Component implements OnInit {
 
+  private subscriptions = new Subscription();
+
    // set the currenr year
    year: number = new Date().getFullYear();
 
    resetForm: UntypedFormGroup;
    submitted = false;
    error = '';
-   success = '';
+   success: boolean = false;
    loading = false;
 
-   constructor(private formBuilder: UntypedFormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) { }
+   constructor(
+    private formBuilder: UntypedFormBuilder,
+    private authService: AuthService
+    ) { }
 
   ngOnInit(): void {
     this.resetForm = this.formBuilder.group({
@@ -37,19 +41,21 @@ export class Recoverpwd2Component implements OnInit {
    * On submit form
    */
   onSubmit() {
-    this.success = '';
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.resetForm.invalid) {
-      return;
-    }
-    if (environment.defaultauth === 'firebase') {
-      this.authenticationService.resetPassword(this.f.email.value)
-        .catch(error => {
-          this.error = error ? error : '';
-        });
-    }
+    if (this.resetForm.invalid) { return }
+
+    this.subscriptions.add(
+      this.authService.sentLinkResetPassword(this.f.email.value).subscribe({
+        next: (resp: string) => {
+          this.error = undefined;
+          this.success = true;
+        }, error: (error) => {
+          this.error = error;
+        }
+      })
+    );
   }
 
   carouselOption: OwlOptions = {

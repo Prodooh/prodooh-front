@@ -339,7 +339,8 @@
   },
   "ERRORS": {
     "AUTH": {
-      "failed_authentication": "The user credentials were incorrect."
+      "failed_authentication": "The user credentials were incorrect.",
+      "MANY_ATTEMPTS": "Too Many Attempts."
     },
     "GENERAL": {
       "TEXT_1": "Unexpected error",
@@ -354,7 +355,8 @@
     "MESSAGES": {
       "TEXT_SUCCESS_1": "Ready!",
       "TEXT_SUCCESS_2": "All changes were made successfully."
-    }
+    },
+    "RESET": "Reset"
   },
   "DATATABLES": {
     "sEmptyTable":     "No data available in table",
@@ -380,6 +382,8 @@
     }
   },
   "AUTH": {
+    "SIGN_IN": "Sign In here",
+    "TEXT_SEND_LINK": "Instructions have been sent to your email.",
     "LOGIN": {
       "WELCOME": "Welcome Back!",
       "TEXT_1": "Sign in to continue",
@@ -391,6 +395,10 @@
       "UPDATE_PASSWORD": "Update your password",
       "TEXT_1": "You need to update your password to continue.",
       "PASSWORD_CONFIRMATION": "Password confirmation"
+    },
+    "RESET_PASSWORD": {
+      "RESET_PASSWORD": "Reset Password",
+      "TEXT_1": "Enter your Email and instructions will be sent to you!"
     }
   },
   "FORM_VALIDATIONS": {

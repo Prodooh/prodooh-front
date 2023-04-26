@@ -30,4 +30,8 @@ export class AuthService {
   updatePassword(password: string) {
     return this.baseService.postQuery( 'auth/update-password', { password } );
   }
+
+  sentLinkResetPassword(email: string) {
+    return this.http.post( `${ environment.urlBackend }/auth/password/send-link`, { email } );  
+  }
 }
