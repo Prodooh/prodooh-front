@@ -7,6 +7,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../core/services/auth.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from 'src/app/core/interfaces/user';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { PreferenceService } from 'src/app/core/services/preference.service';
+import { PayloadPereferences } from 'src/app/core/interfaces/payload-preferences';
 
 @Component({
   selector: 'app-topbar',
@@ -31,7 +35,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     public languageService: LanguageService,
     public translate: TranslateService,
-    public cookieService: CookieService
+    public cookieService: CookieService,
+    private localStorageService: LocalStorageService,
+    public preferencesService: PreferenceService
   ) { }
 
   listLang = [
@@ -44,6 +50,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
 
   openMobileMenu: boolean;
 
+  user: User;
+  payload: PayloadPereferences;
+
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
@@ -52,14 +61,20 @@ export class TopbarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.openMobileMenu = false;
     this.element = document.documentElement;
-
-    this.cookieValue = this.cookieService.get('lang');
+    this.cookieValue = this.cookieService.get('lang');    
+    this.user = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
     const val = this.listLang.filter(x => x.lang === this.cookieValue);
     this.countryName = val.map(element => element.text);
     if (val.length === 0) {
       if (this.flagvalue === undefined) { this.valueset = 'assets/images/flags/us.jpg'; }
     } else {
       this.flagvalue = val.map(element => element.flag);
+    }
+    this.payload = this.localStorageService.get('payload');
+    if(this.payload != null){
+      this.listLang.findIndex(list => list.lang == this.payload['lang'])
+      let lang = this.listLang[this.listLang.findIndex(list => list.lang == this.payload['lang'])];
+      this.setLanguage(lang.text,lang.lang,lang.flag);
     }
   }
 
@@ -72,6 +87,9 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.flagvalue = flag;
     this.cookieValue = lang;
     this.languageService.setLanguage(lang);
+    this.payload['lang'] = lang; 
+    this.localStorageService.set('payload', this.payload);
+    this.preferencesService.savePreferences(this.payload); 
   }
 
   /**
@@ -97,6 +115,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
       this.authService.logout().subscribe({
         next: () => {
           this.cookieService.delete( environment.sessionCookieStorageKey, '/' );
+          this.localStorageService.deleteAll();
         },
         complete: () => {
           this.router.navigate(['/account/login']);
