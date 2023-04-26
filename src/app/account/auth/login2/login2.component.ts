@@ -7,6 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
 import { Subscription } from 'rxjs';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { Token } from 'src/app/core/interfaces/token';
 
 @Component({
   selector: 'app-login2',
@@ -25,7 +27,8 @@ export class Login2Component implements OnInit, OnDestroy {
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private translate: TranslateService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private localStorageService: LocalStorageService
   ) { }
 
   loginForm: UntypedFormGroup;
@@ -70,8 +73,9 @@ export class Login2Component implements OnInit, OnDestroy {
         username: this.f.email.value,
         password: this.f.password.value
       }).subscribe({
-        next: (resp) => {
+        next: (resp: Token) => {
           this.cookieService.set(`${ environment.sessionCookieStorageKey }`, JSON.stringify( resp ), 15, '/');
+          this.localStorageService.set('payload', resp.user.payload);
           this.router.navigate(['/'])
         },
         error: (error) => {

@@ -239,7 +239,7 @@ body[data-topbar="dark"] {
 
 body[data-sidebar="dark"] {
     .navbar-brand-box {
-        background: $sidebar-dark-bg;
+        background: transparent;
     }
 
     .logo-dark {

@@ -10,6 +10,10 @@ import { MenuItem } from './menu.model';
 import { AuthService } from '../../core/services/auth.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from 'src/app/core/interfaces/user';
+import { PayloadPereferences } from 'src/app/core/interfaces/payload-preferences';
+import { LocalStorageService } from 'src/app/core/services/local-storage.service';
+import { PreferenceService } from 'src/app/core/services/preference.service';
 
 @Component({
   selector: 'app-horizontaltopbar',
@@ -27,8 +31,9 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestr
   flagvalue;
   countryName;
   valueset;
-
+  user: User;
   menuItems = [];
+  payload: PayloadPereferences;
 
   listLang = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
@@ -46,7 +51,10 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestr
     private router: Router,
     public languageService: LanguageService,
     public cookieService: CookieService,
-    public authService: AuthService
+    public authService: AuthService,
+    private localStorageService: LocalStorageService,
+    public preferencesService: PreferenceService,
+    public serviceLanguage: LanguageService
   ) {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -60,6 +68,7 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestr
 
     this.initialize();
 
+    this.user = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
     this.cookieValue = this.cookieService.get('lang');
     const val = this.listLang.filter(x => x.lang === this.cookieValue);
     this.countryName = val.map(element => element.text);
@@ -67,6 +76,12 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestr
       if (this.flagvalue === undefined) { this.valueset = 'assets/images/flags/us.jpg'; }
     } else {
       this.flagvalue = val.map(element => element.flag);
+    }
+    this.payload = this.localStorageService.get('payload');
+    if(this.payload != null){
+      this.listLang.findIndex(list => list.lang == this.payload['lang'])
+      let lang = this.listLang[this.listLang.findIndex(list => list.lang == this.payload['lang'])];
+      this.setLanguage(lang.text,lang.lang,lang.flag);
     }
   }
 
@@ -79,6 +94,9 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestr
     this.flagvalue = flag;
     this.cookieValue = lang;
     this.languageService.setLanguage(lang);
+    this.payload['lang'] = lang; 
+    this.localStorageService.set('payload', this.payload);
+    this.preferencesService.savePreferences(this.payload);
   }
 
   /**
@@ -89,6 +107,7 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestr
       this.authService.logout().subscribe({
         next: () => {
           this.cookieService.delete( environment.sessionCookieStorageKey, '/' );
+          this.localStorageService.deleteAll();
         },
         complete: () => {
           this.router.navigate(['/account/login']);
