@@ -79,7 +79,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.subscriptions.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   setLanguage(text: string, lang: string, flag: string) {
