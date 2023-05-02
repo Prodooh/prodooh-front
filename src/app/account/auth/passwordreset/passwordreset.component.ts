@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './passwordreset.component.html',
   styleUrls: ['./passwordreset.component.scss']
 })
-export class PasswordResetComponent implements OnInit {
+export class PasswordResetComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
@@ -49,6 +49,10 @@ export class PasswordResetComponent implements OnInit {
       password: ['', Validators.required],
       passwordConfirmation: ['']
     }, { validator: confirmPasswordValidator() });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   // convenience getter for easy access to form fields

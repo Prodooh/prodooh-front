@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './recoverpwd2.component.html',
   styleUrls: ['./recoverpwd2.component.scss']
 })
-export class Recoverpwd2Component implements OnInit {
+export class Recoverpwd2Component implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
@@ -37,6 +37,10 @@ export class Recoverpwd2Component implements OnInit {
     this.resetForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   // convenience getter for easy access to form fields
