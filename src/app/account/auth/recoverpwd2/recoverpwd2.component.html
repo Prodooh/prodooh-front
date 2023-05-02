@@ -82,12 +82,6 @@
 
                                 <div class="mt-4">
                                     <form [formGroup]="resetForm" (ngSubmit)="onSubmit()">
-                                        <ngb-alert type="danger" *ngIf="error" [dismissible]="false">
-                                            {{ 'ERRORS.AUTH.MANY_ATTEMPTS' | translate }}
-                                        </ngb-alert>
-                                        <ngb-alert type="success" *ngIf="success" [dismissible]="false">
-                                            {{ 'AUTH.TEXT_SEND_LINK' | translate }}
-                                        </ngb-alert>
                                         <div class="mb-3">
                                             <label for="useremail">{{ 'GENERAL.EMAIL' | translate }}</label>
                                             <input type="email" formControlName="email"
@@ -105,8 +99,11 @@
                                         </div>
 
                                         <div class="text-end">
-                                            <button class="btn btn-primary w-md" type="submit">{{ 'GENERAL.RESET' |
-                                                translate }}</button>
+                                            <button *ngIf="!loading" class="btn btn-primary w-md" type="submit">{{ 'GENERAL.RESET' | translate }}</button>
+                                            <button *ngIf="loading" class="btn btn-primary w-md" type="button" disabled>
+                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                                {{ 'GENERAL.RESET' | translate }}
+                                            </button>
                                         </div>
 
                                     </form>

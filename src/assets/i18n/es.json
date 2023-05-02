@@ -340,7 +340,9 @@
   "ERRORS": {
     "AUTH": {
       "failed_authentication": "Las credenciales del usuario son incorrectas.",
-      "MANY_ATTEMPTS": "Demasiados intentos."
+      "MANY_ATTEMPTS": "Demasiados intentos.",
+      "TOKEN_EXPIRED": "El token ha caducado",
+      "TEXT_TOKEN_EXPIRED": "El token ha caducado, vuelva a generar una solicitud"
     },
     "GENERAL": {
       "TEXT_1": "Error inesperado",
@@ -398,7 +400,7 @@
       "PASSWORD_CONFIRMATION": "Confirmación de contraseña"
     },
     "RESET_PASSWORD": {
-      "RESET_PASSWORD": "Recuperar contraseña",
+      "RESET_PASSWORD": "Reestablecer contraseña",
       "TEXT_1": "Ingrese su correo electrónico y se le enviarán las instrucciones!"
     }
   },

@@ -20,8 +20,8 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy {
 
   passwordForm: FormGroup;
   submitted = false;
-  error = '';
   year: number = new Date().getFullYear();
+  loading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,20 +47,22 @@ export class UpdatePasswordComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.submitted = true;
 
-    if (this.passwordForm.invalid) {
-      return;
-    }
+    if (this.passwordForm.invalid) {return; }
+
+    this.loading = true;
 
     this.subscriptions.add(
       this.authService.updatePassword(this.f.password.value).subscribe({
         next: () => {
+          this.loading = false;
           let tokenLocalStorage = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey));
           tokenLocalStorage.user.is_change_password = true;
           this.cookieService.set(environment.sessionCookieStorageKey, JSON.stringify(tokenLocalStorage),15,'/');
           this.sweetAlertService.success();
           this.router.navigateByUrl('/');
         },
-        error: (error) => {
+        error: () => {
+          this.loading = false;
           this.sweetAlertService.error();
         }
       })

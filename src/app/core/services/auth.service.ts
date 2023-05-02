@@ -5,6 +5,7 @@ import { Auth } from '../interfaces/auth';
 import { CookieService } from 'ngx-cookie-service';
 import { BaseService } from './base.service';
 import { LocalStorageService } from './local-storage.service';
+import { ResetPassword } from '../interfaces/reset-password';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private baseService: BaseService,
-    private cookieService: CookieService,
-    private localStorageService: LocalStorageService
+    private baseService: BaseService
   ) {}
 
   login( userAuth: Auth ) {
@@ -33,5 +32,9 @@ export class AuthService {
 
   sentLinkResetPassword(email: string) {
     return this.http.post( `${ environment.urlBackend }/auth/password/send-link`, { email } );  
+  }
+
+  resetPassword(data: ResetPassword) {
+    return this.http.post( `${ environment.urlBackend }/auth/password/reset`, data );  
   }
 }

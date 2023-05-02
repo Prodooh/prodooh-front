@@ -340,7 +340,9 @@
   "ERRORS": {
     "AUTH": {
       "failed_authentication": "The user credentials were incorrect.",
-      "MANY_ATTEMPTS": "Too Many Attempts."
+      "MANY_ATTEMPTS": "Too Many Attempts.",
+      "TOKEN_EXPIRED": "The token has expired",
+      "TEXT_TOKEN_EXPIRED": "The token has expired, please regenerate a request"
     },
     "GENERAL": {
       "TEXT_1": "Unexpected error",

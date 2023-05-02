@@ -4,6 +4,9 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 
 import { AuthService } from '../../../core/services/auth.service';
 import { Subscription } from 'rxjs';
+import { SweetAlertService } from 'src/app/core/services/sweet-alert.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recoverpwd2',
@@ -19,13 +22,15 @@ export class Recoverpwd2Component implements OnInit {
 
    resetForm: UntypedFormGroup;
    submitted = false;
-   error = '';
-   success: boolean = false;
+   
    loading = false;
 
    constructor(
     private formBuilder: UntypedFormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private sweetAlertService: SweetAlertService,
+    private translateService: TranslateService,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -46,13 +51,26 @@ export class Recoverpwd2Component implements OnInit {
     // stop here if form is invalid
     if (this.resetForm.invalid) { return }
 
+    this.loading = true;
+
     this.subscriptions.add(
       this.authService.sentLinkResetPassword(this.f.email.value).subscribe({
         next: (resp: string) => {
-          this.error = undefined;
-          this.success = true;
-        }, error: (error) => {
-          this.error = error;
+          this.loading = false;
+          this.sweetAlertService.alert(
+            'OK',
+            this.translateService.instant('AUTH.TEXT_SEND_LINK'),
+            'success'
+          );
+          this.router.navigate(['/account/login']);
+        },
+        error: (error) => {
+          this.loading = false;
+          this.sweetAlertService.alert(
+            'Error',
+            this.translateService.instant('ERRORS.AUTH.MANY_ATTEMPTS'),
+            'success'
+          );
         }
       })
     );
