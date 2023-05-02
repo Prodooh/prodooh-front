@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Login2Component } from './login2/login2.component';
 
-import { PasswordresetComponent } from './passwordreset/passwordreset.component';
+import { PasswordResetComponent } from './passwordreset/passwordreset.component';
 import { Recoverpwd2Component } from './recoverpwd2/recoverpwd2.component';
 import { UnAuthGuard } from 'src/app/core/guards/un-auth.guard';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
@@ -22,8 +22,14 @@ const routes: Routes = [
     },
     {
         path: 'recover-password',
-        component: Recoverpwd2Component
+        component: Recoverpwd2Component,
+        canActivate: [UnAuthGuard]
     },
+    {
+        path: 'reset-password/:token/:emailb64',
+        component: PasswordResetComponent,
+        canActivate: [UnAuthGuard]
+    }
 ];
 
 @NgModule({

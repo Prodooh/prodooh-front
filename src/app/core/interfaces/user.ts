@@ -8,5 +8,4 @@ export interface User {
     "surnames": string; 
     "email": string;
     "payload": PayloadPereferences;
-
 }

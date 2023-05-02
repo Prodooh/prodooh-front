@@ -22,6 +22,14 @@ export class Login2Component implements OnInit, OnDestroy {
 
   fieldTextType: boolean;
 
+  loginForm: UntypedFormGroup;
+  submitted = false;
+  error = '';
+
+  loading = false;
+
+  year: number = new Date().getFullYear();
+
   constructor(
     private authService: AuthService,
     private formBuilder: UntypedFormBuilder,
@@ -30,12 +38,6 @@ export class Login2Component implements OnInit, OnDestroy {
     private cookieService: CookieService,
     private localStorageService: LocalStorageService
   ) { }
-
-  loginForm: UntypedFormGroup;
-  submitted = false;
-  error = '';
-
-  year: number = new Date().getFullYear();
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -68,17 +70,21 @@ export class Login2Component implements OnInit, OnDestroy {
 
     if (this.loginForm.invalid) return;
 
+    this.loading = true;
+
     this.subscriptions.add(
       this.authService.login({
         username: this.f.email.value,
         password: this.f.password.value
       }).subscribe({
         next: (resp: Token) => {
+          this.loading = false;
           this.cookieService.set(`${ environment.sessionCookieStorageKey }`, JSON.stringify( resp ), 15, '/');
           this.localStorageService.set('payload', resp.user.payload);
           this.router.navigate(['/'])
         },
         error: (error) => {
+          this.loading = false;
           this.error = error.error == 'failed_authentication' ? this.translate.instant('ERRORS.AUTH.failed_authentication') : 'Error'
         }
       })

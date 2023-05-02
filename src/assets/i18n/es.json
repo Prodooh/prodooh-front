@@ -339,7 +339,10 @@
   },
   "ERRORS": {
     "AUTH": {
-      "failed_authentication": "Las credenciales del usuario son incorrectas."
+      "failed_authentication": "Las credenciales del usuario son incorrectas.",
+      "MANY_ATTEMPTS": "Demasiados intentos.",
+      "TOKEN_EXPIRED": "El token ha caducado",
+      "TEXT_TOKEN_EXPIRED": "El token ha caducado, vuelva a generar una solicitud"
     },
     "GENERAL": {
       "TEXT_1": "Error inesperado",
@@ -354,7 +357,8 @@
     "MESSAGES": {
       "TEXT_SUCCESS_1": "Listo!",
       "TEXT_SUCCESS_2": "Todos los cambios se realizaron con éxito."
-    }
+    },
+    "RESET": "Recuperar"
   },
   "DATATABLES": {
     "sProcessing": "Procesando...",
@@ -381,6 +385,8 @@
     }
   },
   "AUTH": {
+    "SIGN_IN": "Inicia Sesión",
+    "TEXT_SEND_LINK": "Las instrucciones han sido enviadas a su correo electrónico.",
     "LOGIN": {
       "WELCOME": "Bienvenid@ de nuevo!",
       "TEXT_1": "Inicia sesión para continuar",
@@ -392,6 +398,10 @@
       "UPDATE_PASSWORD": "Actualiza tu contraseña",
       "TEXT_1": "Necesitas actualizar tu contraseña para continuar.",
       "PASSWORD_CONFIRMATION": "Confirmación de contraseña"
+    },
+    "RESET_PASSWORD": {
+      "RESET_PASSWORD": "Reestablecer contraseña",
+      "TEXT_1": "Ingrese su correo electrónico y se le enviarán las instrucciones!"
     }
   },
   "FORM_VALIDATIONS": {
