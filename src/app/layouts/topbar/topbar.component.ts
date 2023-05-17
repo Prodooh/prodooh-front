@@ -23,11 +23,11 @@ import { PayloadPereferences } from 'src/app/core/interfaces/payload-preferences
  */
 export class TopbarComponent implements OnInit, OnDestroy {
 
-  element;
-  cookieValue;
-  flagvalue;
-  countryName;
-  valueset;
+  public element;
+  public cookieValue;
+  public flagvalue;
+  public countryName;
+  public valueset;
 
   constructor(
     @Inject(DOCUMENT) private document: any,
@@ -40,23 +40,23 @@ export class TopbarComponent implements OnInit, OnDestroy {
     public preferencesService: PreferenceService
   ) { }
 
-  listLang = [
+  public listLang = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
     { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
-    { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
-    { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
-    { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
   ];
 
-  openMobileMenu: boolean;
+  public openMobileMenu: boolean;
 
-  user: User;
-  payload: PayloadPereferences;
+  public user: User;
+  public payload: PayloadPereferences;
 
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
   private subscriptions = new Subscription();
+
+  public imgBrandLarge: string = `${ environment.urlBackend }/images/companies/prodooh.png`;
+  public imgBrandShort: string = `${ environment.urlBackend }/images/companies/prodooh.svg`;
 
   ngOnInit() {
     this.openMobileMenu = false;
@@ -70,16 +70,30 @@ export class TopbarComponent implements OnInit, OnDestroy {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+
     this.payload = this.localStorageService.get('payload');
-    if(this.payload != null){
-      this.listLang.findIndex(list => list.lang == this.payload['lang'])
-      let lang = this.listLang[this.listLang.findIndex(list => list.lang == this.payload['lang'])];
-      this.setLanguage(lang.text,lang.lang,lang.flag);
-    }
+    let lang = this.listLang[this.listLang.findIndex(list => list.lang == this.payload['lang'])];
+    this.setLanguage(lang.text,lang.lang,lang.flag);
+
+    this.loadPageBranding();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  loadPageBranding() {
+    let domain = window.location.hostname;
+    if (!domain.includes(environment.mainDomain)) {
+      let domianSplit = domain.split('.');
+      if (domianSplit[0] === 'www') {
+        this.imgBrandLarge = `${ environment.urlBackend }/images/companies/${ domianSplit[1] }.png`;
+        this.imgBrandShort = `${ environment.urlBackend }/images/companies/${ domianSplit[1] }.svg`;
+      } else {
+        this.imgBrandLarge = `${ environment.urlBackend }/images/companies/${ domianSplit[0] }.png`;
+        this.imgBrandShort = `${ environment.urlBackend }/images/companies/${ domianSplit[0] }.svg`;
+      }
+    }
   }
 
   setLanguage(text: string, lang: string, flag: string) {

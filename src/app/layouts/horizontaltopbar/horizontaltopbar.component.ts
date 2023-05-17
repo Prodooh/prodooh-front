@@ -26,24 +26,24 @@ import { PreferenceService } from 'src/app/core/services/preference.service';
  */
 export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  element;
-  cookieValue;
-  flagvalue;
-  countryName;
-  valueset;
-  user: User;
-  menuItems = [];
-  payload: PayloadPereferences;
+  public element;
+  public cookieValue;
+  public flagvalue;
+  public countryName;
+  public valueset;
+  public user: User;
+  public menuItems = [];
+  public payload: PayloadPereferences;
 
-  listLang = [
+  public listLang = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
     { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
-    { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
-    { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
-    { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
   ];
 
   private subscriptions = new Subscription();
+
+  public imgBrandLarge: string = `${ environment.urlBackend }/images/companies/prodooh.png`;
+  public imgBrandShort: string = `${ environment.urlBackend }/images/companies/prodooh.svg`;
 
   // tslint:disable-next-line: max-line-length
   constructor(
@@ -70,6 +70,7 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestr
 
     this.user = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
     this.cookieValue = this.cookieService.get('lang');
+
     const val = this.listLang.filter(x => x.lang === this.cookieValue);
     this.countryName = val.map(element => element.text);
     if (val.length === 0) {
@@ -77,16 +78,31 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit, OnDestr
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+
     this.payload = this.localStorageService.get('payload');
-    if(this.payload != null){
-      this.listLang.findIndex(list => list.lang == this.payload['lang'])
-      let lang = this.listLang[this.listLang.findIndex(list => list.lang == this.payload['lang'])];
-      this.setLanguage(lang.text,lang.lang,lang.flag);
-    }
+
+    let lang = this.listLang[this.listLang.findIndex(list => list.lang == this.payload['lang'])];
+    this.setLanguage(lang.text,lang.lang,lang.flag);
+
+    this.loadPageBranding();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  loadPageBranding() {
+    let domain = window.location.hostname;
+    if (!domain.includes(environment.mainDomain)) {
+      let domianSplit = domain.split('.');
+      if (domianSplit[0] === 'www') {
+        this.imgBrandLarge = `${ environment.urlBackend }/images/companies/${ domianSplit[1] }.png`;
+        this.imgBrandShort = `${ environment.urlBackend }/images/companies/${ domianSplit[1] }.svg`;
+      } else {
+        this.imgBrandLarge = `${ environment.urlBackend }/images/companies/${ domianSplit[0] }.png`;
+        this.imgBrandShort = `${ environment.urlBackend }/images/companies/${ domianSplit[0] }.svg`;
+      }
+    }
   }
 
   setLanguage(text: string, lang: string, flag: string) {
