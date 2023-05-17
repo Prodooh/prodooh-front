@@ -21,7 +21,8 @@ export const environment = {
     client_id: 2,
     client_secret: '10XwHjzlOKJpDEmodZEjOjAB2MyNvZ7zFxyzz2bY',
     grant_type: 'password'
-  }
+  },
+  mainDomain: 'panel.prodooh.com'
 };
 
 

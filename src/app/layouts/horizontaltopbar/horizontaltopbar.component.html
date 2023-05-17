@@ -5,19 +5,19 @@
       <div class="navbar-brand-box">
         <a routerLink="/" class="logo logo-dark">
           <span class="logo-sm">
-            <img src="assets/images/prodooh.svg" alt="" height="22">
+            <img [src]="imgBrandShort" alt="" height="22">
           </span>
           <span class="logo-lg">
-            <img src="assets/images/prodooh.png" alt="" >
+            <img [src]="imgBrandLarge" alt="" >
           </span>
         </a>
 
         <a routerLink="/" class="logo logo-light">
           <span class="logo-sm">
-            <img src="assets/images/prodooh.svg" alt="" height="22">
+            <img [src]="imgBrandShort" alt="" height="22">
           </span>
           <span class="logo-lg">
-            <img src="assets/images/prodooh.png" alt="" >
+            <img [src]="imgBrandLarge" alt="" >
           </span>
         </a>
       </div>
@@ -213,7 +213,7 @@
 
       <div class="dropdown d-inline-block" ngbDropdown>
         <button type="button" class="btn header-item" id="page-header-user-dropdown" ngbDropdownToggle>
-          <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
+          <img class="rounded-circle header-profile-user" src="{{ user.image?.url | noImage: 'user' }}" alt="Header Avatar">
           <span class="d-none d-xl-inline-block ms-1">{{ user.name | titlecase}} {{ user.surnames | titlecase}}</span>
           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
         </button>
