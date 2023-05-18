@@ -337,6 +337,12 @@
       }
     }
   },
+  "USER":{
+    "BASICINFORMATION": "Información basica",
+    "FILLALLINFORMATIONBELOW": "Llene Toda La Información A Continuación",
+    "NAME": "Nombre",
+    "SURNAMES": "Apellidos"
+  },
   "ERRORS": {
     "AUTH": {
       "failed_authentication": "Las credenciales del usuario son incorrectas."
@@ -351,6 +357,11 @@
     "EMAIL": "Correo electrónico",
     "PASSWORD": "Contraseña",
     "UPDATE": "Actualizar",
+    "COMPANY": "Empresa",
+    "NOCOMPANY": "Sin Empresa",
+    "COUNTRY": "Pais",
+    "DELETEIMAGE": "Eliminar Imagen",
+    "SAVE": "Guardar",
     "MESSAGES": {
       "TEXT_SUCCESS_1": "Listo!",
       "TEXT_SUCCESS_2": "Todos los cambios se realizaron con éxito."

@@ -15,6 +15,9 @@ import { AppComponent } from './app.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -25,6 +28,7 @@ export function createTranslateLoader(http: HttpClient): any {
     AppComponent
   ],
   imports: [
+    NgSelectModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -43,7 +47,8 @@ export function createTranslateLoader(http: HttpClient): any {
     NgbNavModule,
     NgbTooltipModule,
     ScrollToModule.forRoot(),
-    NgbModule
+    NgbModule,
+    DropzoneModule
   ],
   bootstrap: [AppComponent],
   providers: [

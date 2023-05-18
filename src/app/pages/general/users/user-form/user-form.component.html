@@ -1,0 +1,100 @@
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">{{ 'USER.BASICINFORMATION' | translate }}</h4>
+                <p class="card-title-desc">{{ 'USER.FILLALLINFORMATIONBELOW' | translate }}</p>
+
+                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                    <div class="row animate__animated animate__fadeIn">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="company">{{ 'GENERAL.COMPANY' | translate | titlecase }}</label>
+                                <ng-select formControlName="company" class="select-filters custom" id="company" [ngClass]="{ 'is-invalid': submitted && f.company.errors }">
+                                    <ng-option value="">{{ 'GENERAL.NOCOMPANY' | translate }}</ng-option>
+                                    <ng-option *ngFor="let companies of companies" [value]="companies.id">{{companies.name_company | uppercase}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
+                                    <div *ngIf="f.company.errors.required">{{ 'ERRORS.FORMUSER.COMPANYREQUIRED' | translate }}</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">{{ 'GENERAL.COUNTRY' | translate | titlecase }}</label>
+                                <ng-select formControlName="country" class="select-filters custom" id="country" [ngClass]="{ 'is-invalid': submitted && f.country.errors }">
+                                    <ng-option *ngFor="let country of countries" [value]="country.id">{{country.country_name | uppercase}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                    <div *ngIf="f.country.errors.required">{{ 'ERRORS.FORMUSER.COUNTRYREQUIRED' | translate }}</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">{{ 'USER.NAME' | translate }}</label>
+                                <input formControlName="name" id="name" name="name" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.name.errors.required">{{ 'ERRORS.FORMUSER.NAMEREQUIRED' | translate }}</div>
+                                    <div *ngIf="f.name.errors.minlength">{{ 'ERRORS.MINLENGTH' | translate }} {{ f.name.errors.minlength.requiredLength }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <ng-select formControlName="role" class="select-filters custom" id="role" [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
+                                    <ng-option *ngFor="let role of roles" [value]="role.id">{{ 'roles.'+role.value | translate | uppercase}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+                                    <div *ngIf="f.role.errors.required">{{ 'ERRORS.FORMUSER.ROLEREQUIRED' | translate }}</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="surnames">{{ 'USER.SURNAMES' | translate }}</label>
+                                <input formControlName="surnames" id="surnames" name="surnames" type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.surnames.errors }">
+                                <div *ngIf="submitted && f.surnames.errors" class="invalid-feedback">
+                                    <div *ngIf="f.surnames.errors.required">{{ 'ERRORS.FORMUSER.SURNAMESREQUIRED' | translate }}</div>
+                                    <div *ngIf="f.surnames.errors.minlength">{{ 'ERRORS.MINLENGTH' | translate }} {{ f.surnames.errors.minlength.requiredLength }}</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">{{ 'GENERAL.EMAIL' | translate }}</label>
+                                <input formControlName="email" id="email" name="email" type="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email.errors.required">{{ 'ERRORS.EMAILISREQUIRED' | translate }}</div>
+                                    <div *ngIf="f.email.errors.email">{{ 'ERRORS.EMAILMUSTCALIDEMAIL' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row animate__animated animate__fadeIn">
+                        <div class="card-body">
+                            <h4 class="card-title mb-3">Img</h4>
+                            <dropzone class="dropzone"  [config]="config" (success)="loadedImage($event)">
+                                <button type="button" *ngIf="loadedImageName" class="btn btn-outline-danger float-right">{{ 'GENERAL.DELETEIMAGE' | translate }}</button>
+                            </dropzone>
+                        </div>
+                    </div>
+
+                    <div *ngIf="typeAction === 'update'" class="row animate__animated animate__fadeIn">
+                        <div *ngIf="!userToUpdateImage" class="card-body">
+                            <h4 class="card-title mb-3">Img</h4>
+                            <dropzone class="dropzone"  [config]="config">
+                                <button type="button" *ngIf="loadedImageName" class="btn btn-outline-danger float-right" >{{ 'GENERAL.DELETEIMAGE' | translate }}</button>
+                            </dropzone>
+                        </div>
+                        <div *ngIf="userToUpdateImage" class="card-body text-center">
+                            <img [src]="userToUpdateImage" alt="" height="150">
+                            <br>
+                            <button type="button" *ngIf="userToUpdateImage" class="btn btn-outline-danger float-center mt-3" >{{ 'GENERAL.DELETEIMAGE' | translate }}</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mr-1 float-right">{{ 'GENERAL.SAVE' | translate }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->

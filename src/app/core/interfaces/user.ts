@@ -7,6 +7,6 @@ export interface User {
     "name": string; 
     "surnames": string; 
     "email": string;
+    "roles": any;
     "payload": PayloadPereferences;
-
 }

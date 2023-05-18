@@ -337,6 +337,12 @@
       }
     }
   },
+  "USER":{
+    "BASICINFORMATION": "Basic Information",
+    "FILLALLINFORMATIONBELOW": "Fill All Information Below",
+    "NAME": "Name",
+    "SURNAMES": "Surnames"
+  },
   "ERRORS": {
     "AUTH": {
       "failed_authentication": "The user credentials were incorrect."
@@ -351,6 +357,11 @@
     "EMAIL": "Email",
     "PASSWORD": "Password",
     "UPDATE": "Update",
+    "COMPANY": "Company",
+    "NOCOMPANY": "No Company",
+    "COUNTRY": "Country",
+    "DELETEIMAGE": "Delete Image",
+    "SAVE": "Save",
     "MESSAGES": {
       "TEXT_SUCCESS_1": "Ready!",
       "TEXT_SUCCESS_2": "All changes were made successfully."
