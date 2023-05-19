@@ -23,4 +23,8 @@ export class UserProfileService {
         return this.baseService.postQuery( 'users', user );
     }
 
+    getUser (uuid: string ){
+        return this.baseService.getQuery(`users/${uuid}`);
+    }
+
 }

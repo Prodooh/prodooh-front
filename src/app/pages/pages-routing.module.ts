@@ -11,7 +11,11 @@ const routes: Routes = [
     component: DefaultComponent
   },
   {
-    path: 'user-form',
+    path: 'user-form/create',
+    component: UserFormComponent
+  },
+  {
+    path: 'user-form/update/:uuid',
     component: UserFormComponent
   },
   {path: 'users', loadChildren: () => import('./general/general.module').then(m => m.GeneralModule)},

@@ -367,6 +367,17 @@
       "TEXT_SUCCESS_2": "All changes were made successfully."
     }
   },
+  "ROLES": {
+    "SUPERADMINISTRATOR": "Superadministrator",
+    "ADMINISTRATOR": "Administrator",
+    "SALESMANAGER": "Sales Manager",
+    "SELLERCOSTS": "Seller cost",
+    "SELLER": "Seller",
+    "CUSTOMERCOSTS": "Cliet Costs",
+    "CUSTOMER": "Client",
+    "ADMINISTRATORPROVIDER": "Provider",
+    "SUSPENDED": "Suspended"
+  },
   "DATATABLES": {
     "sEmptyTable":     "No data available in table",
     "sInfo":           "Showing START to END of TOTAL entries",

@@ -337,7 +337,7 @@
       }
     }
   },
-  "USER":{
+  "USER": {
     "BASICINFORMATION": "Información basica",
     "FILLALLINFORMATIONBELOW": "Llene Toda La Información A Continuación",
     "NAME": "Nombre",
@@ -366,6 +366,17 @@
       "TEXT_SUCCESS_1": "Listo!",
       "TEXT_SUCCESS_2": "Todos los cambios se realizaron con éxito."
     }
+  },
+  "ROLES": {
+    "SUPERADMINISTRATOR": "Super administrador",
+    "ADMINISTRATOR": "Administrador",
+    "SALESMANAGER": "Administrador ventas",
+    "SELLERCOSTS": "Vendedor con costos",
+    "SELLER": "Vendedor sin costos",
+    "CUSTOMERCOSTS": "Cliente con costos",
+    "CUSTOMER": "Cliente sin costos",
+    "ADMINISTRATORPROVIDER": "Proveedor",
+    "SUSPENDED": "Suspendido"
   },
   "DATATABLES": {
     "sProcessing": "Procesando...",
@@ -410,8 +421,8 @@
     "PASSWORDS_NOT_MATCH": "Las contraseñas no coinciden.",
     "EMAIL_MUST_BE_VALID": "El correo electrónico debe ser una dirección de correo electrónico válida."
   },
-  "TABLES":{
-    "USERS":{
+  "TABLES": {
+    "USERS": {
       "ID": "ID",
       "NAME": "Nombre",
       "EMAIL": "Correo electrónico",
@@ -420,7 +431,7 @@
       "ROLE": "Rol"
     }
   },
-  "BUTTONS":{
+  "BUTTONS": {
     "EDIT": "Editar",
     "DELETE": "Eliminar"
   }

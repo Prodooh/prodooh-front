@@ -12,6 +12,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { BaseService } from 'src/app/core/services/base.service';
+import { Company } from 'src/app/core/interfaces/company';
+import { Country } from 'src/app/core/interfaces/country';
+import { CompanyService } from 'src/app/core/services/company.service';
+import { CountryService } from 'src/app/core/services/country.service';
 
 
 
@@ -34,11 +38,12 @@ export class UserFormComponent {
   userForm: FormGroup;
   submitted = false;
 
-  companies: [];
-  countries: [];
+  companies: Company[];
+  countries: Country[];
   roles: any[];
 
   authenticatedUser: User;
+  userUuid: string;
 
   files: File[] = [];
   config: DropzoneConfigInterface;
@@ -55,12 +60,23 @@ export class UserFormComponent {
     private formBuilder: FormBuilder,
     private alertsService: SweetAlertService,
     private router: Router,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private route: ActivatedRoute,
+    private baseService: BaseService,
+    private companyService: CompanyService,
+    private countryService: CountryService
   ) { }
 
   ngOnInit(): void {
+
+    if (this.router.url.includes('update')) {
+      this.typeAction = 'update';
+      this.userUuid = this.route.snapshot.params['uuid'];
+    }else{
+      this.typeAction = 'create';
+    }
     this.authenticatedUser = JSON.parse(this.cookieService.get(environment.sessionCookieStorageKey)).user;
-    
+
     this.config = {
       url: `${environment.urlBackend}/uploads/users`,
       maxFilesize: 100,
@@ -79,22 +95,20 @@ export class UserFormComponent {
       role: ['', [Validators.required, Validators.min(1)]],
     });
 
-    //this.getCompanies();
-    //this.getCountries();
+    this.getCompanies();
+    this.getCountries();
     this.loadRoles();
 
-    //   if (this.typeAction === 'update') {
-    //     this.subscriptions.add(this.store.select( 'user' ).subscribe( ({selectedUser}) => {
-    //       if (selectedUser) {
-    //         this.userToUpdate = selectedUser;
-    //         this.setUser();
-    //         this.userForm.get('password').setValidators([Validators.minLength(8)]);
-    //         this.userForm.get('password').updateValueAndValidity();
-    //       } else {
-    //         this.router.navigateByUrl('/directory');
-    //       }
-    //     }));
-    //   }
+     if (this.typeAction === 'update') {
+       this.subscriptions.add(this.usersService.getUser(this.userUuid).subscribe((selectedUser: any) => {
+         if (selectedUser) {
+           this.userToUpdate = selectedUser;
+           this.setUser();
+         } else {
+           this.router.navigateByUrl('/');
+         }
+       }));
+     }
   }
 
   ngOnDestroy() {
@@ -104,20 +118,20 @@ export class UserFormComponent {
   // convenience getter for easy access to form fields
   get f() { return this.userForm.controls; }
 
-  // getCompanies() {
-  //   this.subscriptions.add(this.companiesService.getAllCompanies().subscribe( companies => this.companies = companies));
-  // }
+   getCompanies() {
+     this.subscriptions.add(this.companyService.getCompanies().subscribe( (companies: any) => {
+      this.companies = companies;
+     }));
+   }
 
-  // getCountries() {
-  //   this.subscriptions.add(this.countriesService.getCountries().subscribe( countries => this.countries = countries ));
-  // }
+   getCountries() {
+    this.subscriptions.add(this.countryService.getCountries().subscribe( (countries: any) => {
+      this.countries = countries;
+    }));
+   }
 
   loadedImage(event) {
-    console.log("entro");
-    console.log(event);
     this.loadedImageName = event[1];
-    console.log(this.loadedImageName);
-    
   }
 
   loadRoles() {
@@ -177,25 +191,36 @@ export class UserFormComponent {
         break;
     }
   }
-  /*
-    deleteImage() {
-      if ( this.loadedImageName ) {
-        this.subscriptions.add(this.usersService.deleteImage( this.loadedImageName ).subscribe( () => {
-          if (this.type === 'directive' && this.directiveRef) {
-            this.directiveRef.reset();
-          } else if (this.type === 'component' && this.componentRef && this.componentRef.directiveRef) {
-            this.componentRef.directiveRef.reset();
-          }
-          this.loadedImageName = undefined;
-          this.files = [];
-        }));
-      }
-    }*/
+
+  setUser() {
+    const { company_id, country_id, name, surnames, email, roles, image } = this.userToUpdate;
+    this.userForm.patchValue({
+      company: company_id,
+      country: country_id,
+      name,
+      surnames,
+      email,
+      role: roles[0]?.id
+    });
+    this.userToUpdateImage = image;
+  }
+
+  // deleteImage() {
+  //   if (this.loadedImageName) {
+  //     this.subscriptions.add(this.usersService.deleteImage(this.loadedImageName).subscribe(() => {
+  //       if (this.type === 'directive' && this.directiveRef) {
+  //         this.directiveRef.reset();
+  //       } else if (this.type === 'component' && this.componentRef && this.componentRef.directiveRef) {
+  //         this.componentRef.directiveRef.reset();
+  //       }
+  //       this.loadedImageName = undefined;
+  //       this.files = [];
+  //     }));
+  //   }
+  // }
 
   onSubmit() {
     this.submitted = true;
-
-    // stop here if form is invalid
     if (this.userForm.invalid) { return; }
 
     this.newUser = new UserModel(

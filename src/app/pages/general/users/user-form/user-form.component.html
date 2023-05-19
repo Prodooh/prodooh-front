@@ -14,7 +14,7 @@
                                 <label for="company">{{ 'GENERAL.COMPANY' | translate | titlecase }}</label>
                                 <ng-select formControlName="company" class="select-filters custom" id="company" [ngClass]="{ 'is-invalid': submitted && f.company.errors }">
                                     <ng-option value="">{{ 'GENERAL.NOCOMPANY' | translate }}</ng-option>
-                                    <ng-option *ngFor="let companies of companies" [value]="companies.id">{{companies.name_company | uppercase}}</ng-option>
+                                    <ng-option *ngFor="let company of companies" [value]="company.id">{{company.name | uppercase}}</ng-option>
                                 </ng-select>
                                 <div *ngIf="submitted && f.company.errors" class="invalid-feedback">
                                     <div *ngIf="f.company.errors.required">{{ 'ERRORS.FORMUSER.COMPANYREQUIRED' | translate }}</div>
@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label for="country">{{ 'GENERAL.COUNTRY' | translate | titlecase }}</label>
                                 <ng-select formControlName="country" class="select-filters custom" id="country" [ngClass]="{ 'is-invalid': submitted && f.country.errors }">
-                                    <ng-option *ngFor="let country of countries" [value]="country.id">{{country.country_name | uppercase}}</ng-option>
+                                    <ng-option *ngFor="let country of countries" [value]="country.id">{{country.name | uppercase}}</ng-option>
                                 </ng-select>
                                 <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
                                     <div *ngIf="f.country.errors.required">{{ 'ERRORS.FORMUSER.COUNTRYREQUIRED' | translate }}</div>
@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label for="role">Role</label>
                                 <ng-select formControlName="role" class="select-filters custom" id="role" [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
-                                    <ng-option *ngFor="let role of roles" [value]="role.id">{{ 'roles.'+role.value | translate | uppercase}}</ng-option>
+                                    <ng-option *ngFor="let role of roles" [value]="role.id">{{ 'ROLES.'+role.value | uppercase | translate}}</ng-option>
                                 </ng-select>
                                 <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
                                     <div *ngIf="f.role.errors.required">{{ 'ERRORS.FORMUSER.ROLEREQUIRED' | translate }}</div>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
 
-                    <div class="row animate__animated animate__fadeIn">
+                    <div *ngIf="typeAction === 'create'" class="row animate__animated animate__fadeIn">
                         <div class="card-body">
                             <h4 class="card-title mb-3">Img</h4>
                             <dropzone class="dropzone"  [config]="config" (success)="loadedImage($event)">
@@ -79,7 +79,7 @@
 
                     <div *ngIf="typeAction === 'update'" class="row animate__animated animate__fadeIn">
                         <div *ngIf="!userToUpdateImage" class="card-body">
-                            <h4 class="card-title mb-3">Img</h4>
+                            <h4 class="card-title mb-3">Img Update</h4>
                             <dropzone class="dropzone"  [config]="config">
                                 <button type="button" *ngIf="loadedImageName" class="btn btn-outline-danger float-right" >{{ 'GENERAL.DELETEIMAGE' | translate }}</button>
                             </dropzone>
