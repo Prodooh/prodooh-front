@@ -428,7 +428,9 @@
       "EMAIL": "Correo electrónico",
       "BUTTONS": "Botones",
       "SURNAMES": "Apellidos",
-      "ROLE": "Rol"
+      "ROLE": "Rol",
+      "COUNTRY":"Pais",
+      "COMPANY": "Empresa"
     }
   },
   "BUTTONS": {

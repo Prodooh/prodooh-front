@@ -427,7 +427,9 @@
       "EMAIL": "Email",
       "BUTTONS": "Buttons",
       "SURNAMES": "Surnames",
-      "ROLE": "Role"
+      "ROLE": "Role",
+      "COUNTRY":"Counrty",
+      "COMPANY": "Company"
     }
   },
   "BUTTONS":{
